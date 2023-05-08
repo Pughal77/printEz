@@ -1,2 +1,2 @@
 # printEz
-Our Orbital project by James and I!.
+Our Orbital project by James and Pughal!.
