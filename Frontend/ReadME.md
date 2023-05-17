@@ -1,3 +1,3 @@
 Everything frontend related!
 
-We plan to use React our frontEnd!
+We plan to use React our frontEnd! <3
