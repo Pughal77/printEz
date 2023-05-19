@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "node-csv-parse": "^1.2.0",
+    "node-ssh": "^13.1.0",
+    "simple-ssh": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/ssh2": "^1.11.11"
+  }
+}
