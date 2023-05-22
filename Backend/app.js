@@ -4,6 +4,7 @@ const SSH = require('simple-ssh');
 
 // required to take input from user
 const readline = require("readline");
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -12,16 +13,13 @@ const rl = readline.createInterface({
 // function to get input from user
 function getInput() {
     const host = "stu.comp.nus.edu.sg";
-	var result = "";
     rl.question("What is the user? ", (user) => {
         rl.question("What is the password? ", (password) => {
-            result = sshLogin(host, user ,password);
+            sshLogin(host, user , password);
         rl.close();
         });
     });
-	return result;
 }
-exports.ssh = () => {return getInput()};
 
 // function to ssh into a remote host.
 function sshLogin(host, user ,password){
@@ -35,9 +33,12 @@ function sshLogin(host, user ,password){
 	// execute the df -h command to find out disk utilization
 	ssh_options.exec('pusage', {
 	    out: (stdout) => {
-			output = stdout;
-	    }
+			return stdout;
+	    },
+		err : (stderr) => {
+			return stderr;
+		}
 	}).start();
-	return output;
-}
+	}
 
+exports = () => {return getInput()};
