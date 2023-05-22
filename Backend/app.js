@@ -25,7 +25,7 @@ exports.ssh = () => {return getInput()};
 
 // function to ssh into a remote host.
 function sshLogin(host, user ,password){
-
+	var output = "";
 	console.log('loading')
 	const ssh_options = new SSH({
 	    host: host,
@@ -35,9 +35,9 @@ function sshLogin(host, user ,password){
 	// execute the df -h command to find out disk utilization
 	ssh_options.exec('pusage', {
 	    out: (stdout) => {
-	        console.log(stdout);
-			return stdout;
+			output = stdout;
 	    }
 	}).start();
+	return output;
 }
 
