@@ -1,10 +1,9 @@
-const http = require('http');
-const App = require('./app');
+const main = require('./app');
+const express = require('express');
+const app = express();
 
-http.createServer(function (req, res) {
-	// res stands for response
-	// write a response to the client
-	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.write(App.ssh);
-  	res.end(); // end the response
-}).listen(8080); //the server object listens on port 8080
+app.get("/", (req, res) => {
+	res.json({'output' : 'main.ssh()'})
+});
+
+app.listen(5000, () => {console.log("krshh serer online on port 5000 online boss")});
