@@ -12,19 +12,19 @@ const rl = readline.createInterface({
 // function to get input from user
 function getInput() {
     const host = "stu.comp.nus.edu.sg";
-	
+	var result = "";
     rl.question("What is the user? ", (user) => {
         rl.question("What is the password? ", (password) => {
-            ssh(host, user ,password);
+            result = sshLogin(host, user ,password);
         rl.close();
-
         });
     });
-
+	return result;
 }
+exports.ssh = () => {return getInput()};
 
 // function to ssh into a remote host.
-exports.ssh = function ssh(host, user ,password){
+function sshLogin(host, user ,password){
 
 	console.log('loading')
 	const ssh_options = new SSH({
@@ -39,9 +39,5 @@ exports.ssh = function ssh(host, user ,password){
 			return stdout;
 	    }
 	}).start();
-}
-
-function main(){
-	getInput();
 }
 
