@@ -24,9 +24,9 @@ function getInput() {
 }
 
 // function to ssh into a remote host.
-function ssh(host, user ,password){
+exports.ssh = function ssh(host, user ,password){
 
-	console.log('inside the system')
+	console.log('loading')
 	const ssh_options = new SSH({
 	    host: host,
 	    user: user,
@@ -36,6 +36,7 @@ function ssh(host, user ,password){
 	ssh_options.exec('pusage', {
 	    out: (stdout) => {
 	        console.log(stdout);
+			return stdout;
 	    }
 	}).start();
 }
@@ -43,22 +44,4 @@ function ssh(host, user ,password){
 function main(){
 	getInput();
 }
-
-main();
-
-// const fs = require('fs')
-// const path = require('path')
-// const {NodeSSH} = require('node-ssh')
-
-// const ssh = new NodeSSH()
-
-// const password = "Teppan7/7";
-
-// ssh.connect({
-//   host: 'stu.comp.nus.edu.sg',
-//   username: 'jamesllo',
-//   port: 22,
-//   password,
-//   tryKeyboard: true,
-// });
 
