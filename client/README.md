@@ -1,3 +1,8 @@
+When running, you may need to enter 'npm install' if the error ''react-scripts' is not recognized...
+
+run 'npm install axios' to install a promise based http client
+run 'npm install pdf2json'
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

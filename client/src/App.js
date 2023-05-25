@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from 'react'
-
-import Create from './Create.js'
+import { useEffect, useState } from 'react'
+import './App.css';
+import logo from './logo.svg'
+import Home from './components/Home'
+import Login from './components/Login'
+import UserPage from './components/UserPage'
+import FileUpload from './components/FileUpload'
 
 function App() {
-
-  const [backendData, setBackendData] = useState([{}])
-
-  useEffect(() => {
-    fetch("/api").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])
+  // loginCredentials is an object containing 3 variables:
+  // username, password and usertype
+  const [loginCredentials, setLoginCredentials] = useState({})
 
   return (
-    <div>
-      <Create/>
-      {(typeof backendData.users === 'undefined') ? (
-        <p>Loading...</p>
-      ): (
-        backendData.users.map((user, i) => (
-          <p key = {i}>{user}</p>
-        ))
-      )}
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+      </header>
+      <div className="content">
+        <Home/>
+        <Login loginCredentials = {loginCredentials} setLoginCredentials={setLoginCredentials}/>
+        <UserPage username = {loginCredentials.username}/>
+        <FileUpload/>
+      </div>
     </div>
   )
 }

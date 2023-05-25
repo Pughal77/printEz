@@ -1,0 +1,148 @@
+.App-header {
+    background-color: #024033;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+.App-logo {
+    height: 30vmin;
+    pointer-events: none;
+  }
+
+
+.home {
+    align-items: center;
+    display: block;
+    width: 100%;
+}
+
+.home h1 {
+    font-size: calc(20px + 2vmin);
+    color: #024033;
+    margin-bottom: 30px;
+    text-align: center;
+    width: auto;
+}
+
+.home a {
+    font-size: calc(20px + 2vmin);
+    width: 50%;
+    color: white;
+    background-color: #024033;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin: 0 auto;
+    text-decoration: none;
+    padding: 15px 15px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
+
+.home a:hover {
+    background-color: #058b6e;
+}
+
+.login {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: centre;
+    align-self: center;
+    align-items: left;
+    width: auto;
+}
+.login label {
+    text-align: left;
+    font-size: calc(2px + 2vmin);
+    vertical-align: bottom;
+}
+
+.login h2 {
+    font-size: calc(15px + 2vmin);
+    color: #024033;
+    margin-bottom: 30px;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.login input, .login select {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0;
+    display: block;
+    font-size: calc(1px + 2vmin);
+    position: relative;
+}
+
+.login button {
+    color: #ffffff;
+    background-color: #024033;
+    width: fit-content;
+    font-size: calc(1px + 2vmin);
+    padding: 10px 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login button:hover {
+    background-color: #058b6e;
+}
+
+.userPage h1 {
+    font-size: calc(20px + 2vmin);
+    color: #024033;
+    margin-bottom: 30px;
+    text-align: center;
+    width: auto;
+}
+
+.fileupload {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: centre;
+    align-self: center;
+    align-items: centre;
+    width: auto;
+}
+
+.fileupload h2 {
+    font-size: calc(15px + 2vmin);
+    color: #024033;
+    margin-bottom: 30px;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.fileupload input {
+    color: #ffffff;
+    background-color: #024033;
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0;
+    display: block;
+    font-size: calc(1px + 2vmin);
+    position: relative;
+}
+
+.fileupload button {
+    color: #ffffff;
+    background-color: #024033;
+    width: fit-content;
+    font-size: calc(1px + 2vmin);
+    padding: 10px 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileupload button:hover {
+    background-color: #058b6e;
+}
