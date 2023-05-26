@@ -39,6 +39,7 @@ function sshLogin(host, user ,password){
 			return stderr;
 		}
 	}).start();
-	}
+}
+
 
 // exports = () => {return getInput()};

@@ -3,7 +3,7 @@ const app = express()
 
 app.get("/api", (req, res) => {
     res.json({ "users": ["userOne", "userTwo", "userThree"]})
-    console.log(req.body)
+    //console.log(req.body)
 })
 
 app.listen(5000, () => {
