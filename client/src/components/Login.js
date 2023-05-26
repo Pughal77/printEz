@@ -1,4 +1,5 @@
 import { useState } from "react"
+import axios from "axios"
 
 function Login({ loginCredentials, setLoginCredentials}) {
     const [username, setUsername] = useState('')
@@ -6,12 +7,23 @@ function Login({ loginCredentials, setLoginCredentials}) {
     const [usertype, setUsertype] = useState('student')
     const [isShown, setIsSHown] = useState(false);
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
         const credentials = { username, password, usertype }
         setLoginCredentials( credentials )
 
         console.log(credentials)
+
+        try{
+            console.log("credentials posted")
+
+            await axios.post("http://localhost:5000", {
+                credentials
+            })
+        } catch(e){
+            console.log(e)
+        }
+
     }
 
     const togglePassword = () => {
