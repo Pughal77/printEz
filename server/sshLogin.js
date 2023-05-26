@@ -41,5 +41,4 @@ function sshLogin(host, user ,password){
 	}).start();
 }
 
-
 // exports = () => {return getInput()};

@@ -1,7 +1,6 @@
 function Home() {
     const handleClick = (e) => {
         e.preventDefault()
-        console.log('hi')
     }
 
     return ( 
