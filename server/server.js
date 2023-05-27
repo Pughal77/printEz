@@ -9,8 +9,7 @@ app.use(cors());
 // import other modules
 const http = require("http");
 const { Server } = require("socket.io");
-const path = require("path");
-const { fs } = require("node:fs");
+const fs = require("fs");
 const sshLogin = require("./sshLogin");
 
 // create express server
@@ -27,26 +26,57 @@ const io = new Server(server, {
 
 // listen to events on connection
 io.on("connection", (socket) => {
-    let credentials = null;
+    // temp variable to store user_credentials
+    let user_credentials = null;
+    // temp flag to determine if file has been uploaded
+    let fileUploaded = false;
+
     console.log(`Client Connected: ${socket.id}`);
 
-    // credentials sent
+    // receiving credentials 
     socket.on("loginAttempt", (credentials) => {
         //console.log(credentials);
         sshLogin(credentials);
+        user_credentials = credentials;
         socket.emit("recievedCredentials", credentials);
 
     });
 
-    // pdf file sent (CURRENTLY A WORK IN PROGRESS, files recieved as a buffer)
-    // task: convert the buffer into a proper pdf file
-    // socket.on("pdfTransfer", (pdfFile, callback) => {
-    //     console.log(pdfFile)
-    //     // save the content to the disk, for example
-    //     fs("/tmp/upload", pdfFile, (err) => {
-    //         callback({ message: err ? "failure" : "success" });
-    //     });
-    // });
+    // receiving pdf file
+    socket.on("pdfTransfer", (pdfFile, callback) => {
+        console.log(pdfFile)
+        // save the content to the disk if credentials are entered
+        if (user_credentials) {
+            // set flag to true
+            fileUploaded = true;
+
+            // write file into node_module folder with same name as username
+            fs.writeFile(`printfiles/${user_credentials.username}.pdf`, pdfFile, (err) => {
+                if (err) {
+                    console.log(err);
+                    callback({ message: "failure" });
+                } else {
+                    console.log("file written");    
+                    callback({ message: "success" });
+                }
+            });
+        } else {
+            socket.emit("missingCredentials");
+        }
+    });
+
+    socket.on("disconnect", () => {
+        // if file has been uploaded, delete file
+        if (fileUploaded) {
+            fs.unlink(`printfiles/${user_credentials.username}.pdf`, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(`printfiles/${user_credentials.username}.pdf was deleted`);
+            });
+        }
+        console.log(`Client Disonnected: ${socket.id}`)
+    });
 });
 
 server.listen(3001, () => {

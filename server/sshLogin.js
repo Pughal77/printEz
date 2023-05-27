@@ -17,13 +17,14 @@ function sshLogin(credentials){
 
 	const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
 			: "stf.comp.nus.edu.sg";
+	
 	console.log(host);
 	const ssh_options = new SSH({
 	    host: host,
 	    user: credentials.username,
 	    pass: credentials.password
 	});
-	
+
 	// execute the df -h command to find out disk utilization
 	ssh_options.exec('pusage', {
 	    out: (stdout) => {

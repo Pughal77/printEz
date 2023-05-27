@@ -22,6 +22,12 @@ function FileUpload({ socket }) {
         }
     }
 
+    useEffect(()=> {
+        socket.on("missingCredentials", () => {
+            console.log(`CREDENTIALS MISSING`)
+        })
+    }, [socket]) 
+
     return ( 
         <div className="fileupload">
             <h2>UPLOAD YOUR PDF</h2>
