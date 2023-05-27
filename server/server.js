@@ -10,7 +10,10 @@ app.use(cors());
 const http = require("http");
 const { Server } = require("socket.io");
 const fs = require("fs");
-const sshLogin = require("./sshLogin");
+
+// import login module
+const SSHLogin = require("./sshLogin");
+const sshLogin = new SSHLogin();
 
 // create express server
 const server = http.createServer(app);
@@ -29,17 +32,39 @@ io.on("connection", (socket) => {
     // temp variable to store user_credentials
     let user_credentials = null;
     // temp flag to determine if file has been uploaded
+    // needed to determine if there is a file that needs to be deleted
     let fileUploaded = false;
 
     console.log(`Client Connected: ${socket.id}`);
 
     // receiving credentials 
     socket.on("loginAttempt", (credentials) => {
-        //console.log(credentials);
-        sshLogin(credentials);
-        user_credentials = credentials;
-        socket.emit("recievedCredentials", credentials);
+        // flag to indicate if event was already emitted
+        let waiting = true;
 
+        
+        // credentials verified
+        sshLogin.on("successfulLogin", () => {
+            if (waiting) {
+                console.log("emitting 'recieved Credentials'")
+                user_credentials = credentials;
+                socket.emit("recievedCredentials", credentials);
+                waiting = false;
+            }
+        });
+
+        // credentials invalid
+        sshLogin.on("unsuccessfulLogin", () => {
+            if (waiting) {
+                console.log("emitting 'invalid Credentials'")
+                socket.emit("invalidCredentials");
+                waiting = false;
+            }
+        });
+        
+        // attempt to log in with current credentials
+        console.log(`starting log-in function for ${credentials.username}`);
+        sshLogin.login(credentials); 
     });
 
     // receiving pdf file
@@ -60,6 +85,8 @@ io.on("connection", (socket) => {
                     callback({ message: "success" });
                 }
             });
+
+            socket.emit("fileUploaded");
         } else {
             socket.emit("missingCredentials");
         }

@@ -1,6 +1,7 @@
-function Home() {
+function Home({setLogin}) {
     const handleClick = (e) => {
         e.preventDefault();
+        setLogin(true);
     }
 
     return ( 

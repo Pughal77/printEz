@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 
-function Login({ socket, loginCredentials, setLoginCredentials}) {
+function Login({ socket, loginCredentials, setLoginCredentials, 
+    setSuccessfulLogin}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('student')
     const [isShown, setIsSHown] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [invalid, setInvalid] = useState(false);
     
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -19,17 +21,21 @@ function Login({ socket, loginCredentials, setLoginCredentials}) {
 
     useEffect(()=> {
         socket.on("recievedCredentials", (data) => {
-            console.log(`CREDENTIALS FOR ${data.username} RECIEVED`)
-        })
+            console.log(`CREDENTIALS FOR ${data.username} RECIEVED`);
+            setSuccessfulLogin(true);
+            setInvalid(false);
+        });
+        socket.on("invalidCredentials", () => {
+            setInvalid(true);
+        });
     }, [socket]) 
 
     useEffect(() => {
         if(isSubmitted) {
-            console.log(loginCredentials);
+            console.log("sending credentials to the server");
             socket.emit("loginAttempt", loginCredentials);
             setIsSubmitted(false);
-        }
-        
+        } 
     }, [loginCredentials])
 
     return (
@@ -55,7 +61,8 @@ function Login({ socket, loginCredentials, setLoginCredentials}) {
                     placeholder="enter your Password"
                 />
                 <label style={{
-                    display: 'flex'
+                    display: 'flex',
+                    fontSize: 'calc(0px + 2vmin)'
                 }}>Show password?
                     <input
                         className="password-checkbox"
@@ -65,7 +72,7 @@ function Login({ socket, loginCredentials, setLoginCredentials}) {
                         style={{
                             width: '25px',
                             padding: '6px 10px',
-                            margin: '10px 0',
+                            margin: '5px 0',
                             verticalAlign: 'bottom',
                             position: 'relative'
                         }}
@@ -83,6 +90,9 @@ function Login({ socket, loginCredentials, setLoginCredentials}) {
                 </select>
                 <button>submit</button>
             </form>
+            {invalid && 
+                <p>Invalid Username/Password, Try Again</p>
+            }
         </div>
     )
 }

@@ -1,41 +1,41 @@
-// requires user to download node module through following command
-//      npm install simple-ssh
-const SSH = require('simple-ssh');
+// import events module
+const EventEmitter = require('events');
 
-// required to take input from user
-const readline = require("readline");
+// import simple-ssh module
+const SSH = require("simple-ssh");
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
+	login(credentials){
+		// set timeout for login (unsuccessful if unable to log in within the )
+		const timeoutObj = setTimeout(() => {
+			console.log("INVALID CREDENTIALS \n");
+			this.emit("unsuccessfulLogin")
+			return;
+		  }, 1500);
 
-// function to ssh into a remote host.
-function sshLogin(credentials){
-	var output = "";
-	console.log(`name: ${credentials.username}, password: ${credentials.password}`);
+		const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
+				: "stf.comp.nus.edu.sg";
+		
+		// console.log(`name: ${credentials.username}, password: ${credentials.password}`);
+		// console.log(host);
 
-	const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
-			: "stf.comp.nus.edu.sg";
-	
-	console.log(host);
-	const ssh_options = new SSH({
-	    host: host,
-	    user: credentials.username,
-	    pass: credentials.password
-	});
+		const ssh_options = new SSH({
+			host: host,
+			user: credentials.username,
+			pass: credentials.password
+		});
 
-	// execute the df -h command to find out disk utilization
-	ssh_options.exec('pusage', {
-	    out: (stdout) => {
-			console.log('valid credentials')
-			return stdout;
-	    },
-		err : (stderr) => {
-			console.log('invalid credentials')
-			return stderr;
-		}
-	}).start();
+		// execute the df -h command to find out disk utilization
+		ssh_options.exec("hostname", {
+			out: (stdout) => {
+				clearTimeout(timeoutObj);
+				this.emit("successfulLogin");
+				console.log(`VALID CREDENTIALS\n HOSTNAME: ${stdout}`);
+			}
+		}).start();
+
+		return;
+	}
 }
 
-module.exports = sshLogin;
+module.exports = SSHLogin;

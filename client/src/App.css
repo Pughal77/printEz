@@ -34,7 +34,7 @@
     width: 50%;
     color: white;
     background-color: #024033;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-bottom: 30px;
     margin: 0 auto;
     text-decoration: none;
@@ -49,17 +49,24 @@
 }
 
 .login {
-    max-width: 400px;
     margin: 0 auto;
     text-align: centre;
     align-self: center;
     align-items: left;
     width: auto;
 }
-.login label {
-    text-align: left;
-    font-size: calc(2px + 2vmin);
-    vertical-align: bottom;
+
+.login p {
+    text-align: center;
+    font-size: calc(1px + 2vmin);
+    width: 100%;
+    color: white;
+    background-color: #024033;
+    padding: 10px 15px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    height: fit-content;
 }
 
 .login h2 {
@@ -68,6 +75,16 @@
     margin-bottom: 30px;
     text-align: center;
     vertical-align: bottom;
+}
+
+.login form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login label {
+    text-align: left;
+    font-size: calc(2px + 2vmin);
 }
 
 .login input, .login select {
@@ -97,19 +114,29 @@
 
 .userPage h1 {
     font-size: calc(20px + 2vmin);
-    color: #024033;
     margin-bottom: 30px;
+    width: 100%;
+    color: white;
+    background-color: #04614d;
+    padding: 10px 0px;
+    display: block;
     text-align: center;
-    width: auto;
+    font-weight: bold;
+    height: fit-content;
+    margin: 0px;
 }
 
 .fileupload {
-    max-width: 400px;
     margin: 0 auto;
     text-align: centre;
     align-self: center;
     align-items: centre;
     width: auto;
+}
+
+.fileupload form {
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .fileupload h2 {
@@ -121,6 +148,7 @@
 }
 
 .fileupload input {
+    border-radius: 5px;
     color: #ffffff;
     background-color: #024033;
     width: 100%;
@@ -145,4 +173,17 @@
 
 .fileupload button:hover {
     background-color: #058b6e;
+}
+
+.fileupload p {
+    text-align: center;
+    font-size: calc(1px + 2vmin);
+    width: 100%;
+    color: white;
+    background-color: #04614d;
+    padding: 10px 15px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    height: fit-content;
 }
