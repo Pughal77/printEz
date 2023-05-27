@@ -14,8 +14,8 @@ function usePost(url, frontendData) {
                 if (!res.ok) {
                     throw Error('could not post the data');
                 }
-                console.log(res)
-                setBackendData(res.json())
+                console.log(res);
+                setBackendData(res.json());
             })
             .then(data => {
                 setBackendData(data);

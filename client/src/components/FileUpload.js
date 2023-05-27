@@ -1,20 +1,25 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-function FileUpload() {
+function FileUpload({ socket }) {
     const [selectedFile, setSelectedFile] = useState()
 	const [isFilePicked, setIsFilePicked] = useState(false)
 
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0])
+        setSelectedFile(e.target.files[0]);
         setIsFilePicked(true);
     }
 
     const handleUpload = (e) => {
         e.preventDefault()
         if (isFilePicked) {
-            console.log(selectedFile)
+            console.log(selectedFile);
+            
+            socket.emit("pdfTransfer", selectedFile, (status) => {
+                console.log(status);
+            });
+        } else {
+            alert("please upload a pdf file");
         }
-        
     }
 
     return ( 

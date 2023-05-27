@@ -1,34 +1,36 @@
-import { useState } from "react"
-import axios from "axios"
+import { useState, useEffect } from "react"
 
-function Login({ loginCredentials, setLoginCredentials}) {
+function Login({ socket, loginCredentials, setLoginCredentials}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('student')
     const [isShown, setIsSHown] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     
     const handleSubmit = async(e) => {
-        e.preventDefault()
-        const credentials = { username, password, usertype }
-        setLoginCredentials( credentials )
-
-        console.log(credentials)
-
-        try{
-            console.log("credentials posted")
-
-            await axios.post("http://localhost:5000", {
-                credentials
-            })
-        } catch(e){
-            console.log(e)
-        }
-
+        e.preventDefault();
+        setLoginCredentials( { username, password, usertype } );
+        setIsSubmitted(true);
     }
 
     const togglePassword = () => {
         setIsSHown((isShown) => !isShown);
     };
+
+    useEffect(()=> {
+        socket.on("recievedCredentials", (data) => {
+            console.log(`CREDENTIALS FOR ${data.username} RECIEVED`)
+        })
+    }, [socket]) 
+
+    useEffect(() => {
+        if(isSubmitted) {
+            console.log(loginCredentials);
+            socket.emit("loginAttempt", loginCredentials);
+            setIsSubmitted(false);
+        }
+        
+    }, [loginCredentials])
 
     return (
         <div className="login">

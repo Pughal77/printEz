@@ -1,31 +1,54 @@
-const express = require("express")
-const cors = require("cors")
-// const collection = require("./mongo")
+// import express module
+const express = require("express");
+const app = express();
 
-const app = express()
+// import cors module
+const cors = require("cors");
+app.use(cors());
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
-app.use(cors())
+// import other modules
+const http = require("http");
+const { Server } = require("socket.io");
+const path = require("path");
+const { fs } = require("node:fs");
+const sshLogin = require("./sshLogin");
 
-// app.get("", cors(), (req, res) => {
-//     res.json({ "user": ["userOne", "userTwo", "userThree"]})
-// })
+// create express server
+const server = http.createServer(app);
 
-app.get("", cors(), (req, res) => {
-    res.json()
-})
+// create server for socket.io
+const io = new Server(server, {
+    maxHttpBufferSize: 1e8,
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    },
+});
 
-app.post("", async(req, res) => {
-    const {credentials} = req.body
+// listen to events on connection
+io.on("connection", (socket) => {
+    let credentials = null;
+    console.log(`Client Connected: ${socket.id}`);
 
-    const data = {
-        credentials:credentials
-    }
+    // credentials sent
+    socket.on("loginAttempt", (credentials) => {
+        //console.log(credentials);
+        sshLogin(credentials);
+        socket.emit("recievedCredentials", credentials);
 
-    await collection.insertMany([data])
-})
+    });
 
-app.listen(5000, () => {
-    console.log("server is running on port 5000")
-})
+    // pdf file sent (CURRENTLY A WORK IN PROGRESS, files recieved as a buffer)
+    // task: convert the buffer into a proper pdf file
+    // socket.on("pdfTransfer", (pdfFile, callback) => {
+    //     console.log(pdfFile)
+    //     // save the content to the disk, for example
+    //     fs("/tmp/upload", pdfFile, (err) => {
+    //         callback({ message: err ? "failure" : "success" });
+    //     });
+    // });
+});
+
+server.listen(3001, () => {
+    console.log("SERVER IS RUNNING (port 3001)")
+});

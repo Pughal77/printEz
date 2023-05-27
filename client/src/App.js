@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react'
+
+// import styling
 import './App.css';
+
+// import components
 import logo from './logo.svg'
 import Home from './components/Home'
 import Login from './components/Login'
 import UserPage from './components/UserPage'
 import FileUpload from './components/FileUpload'
+
+// initialize socket.io
+import { io } from "socket.io-client"
+const socket = io.connect("http://localhost:3001")
 
 function App() {
   // loginCredentials is an object containing 3 variables:
@@ -18,9 +26,9 @@ function App() {
       </header>
       <div className="content">
         <Home/>
-        <Login loginCredentials = {loginCredentials} setLoginCredentials={setLoginCredentials}/>
+        <Login socket = {socket} loginCredentials = {loginCredentials} setLoginCredentials={setLoginCredentials}/>
         <UserPage username = {loginCredentials.username}/>
-        <FileUpload/>
+        <FileUpload socket = {socket} />
       </div>
     </div>
   )
