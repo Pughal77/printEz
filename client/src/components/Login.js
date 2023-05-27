@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function Login({ loginCredentials, setLoginCredentials}) {
+function Login({ loginCredentials, setLoginCredentials, loginEvent}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('student')
@@ -10,8 +10,8 @@ function Login({ loginCredentials, setLoginCredentials}) {
         e.preventDefault()
         const credentials = { username, password, usertype }
         setLoginCredentials( credentials )
-
         console.log(credentials)
+        loginEvent(credentials)
     }
 
     const togglePassword = () => {
