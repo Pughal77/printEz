@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
             fileUploaded = true;
 
             // write file into node_module folder with same name as username
-            fs.writeFile(`printfiles/${user_credentials.username}.pdf`, pdfFile, (err) => {
+            fs.writeFile(`print_files/${user_credentials.username}.pdf`, pdfFile, (err) => {
                 if (err) {
                     console.log(err);
                     callback({ message: "failure" });
@@ -95,11 +95,11 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         // if file has been uploaded, delete file
         if (fileUploaded) {
-            fs.unlink(`printfiles/${user_credentials.username}.pdf`, (err) => {
+            fs.unlink(`print_files/${user_credentials.username}.pdf`, (err) => {
                 if (err) {
                     console.log(err);
                 }
-                console.log(`printfiles/${user_credentials.username}.pdf was deleted`);
+                console.log(`print_files/${user_credentials.username}.pdf was deleted`);
             });
         }
         console.log(`Client Disonnected: ${socket.id}`)
