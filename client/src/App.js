@@ -1,29 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+
+// import styling
 import './App.css';
-import logo from './logo.svg'
-import Home from './components/Home'
-import Login from './components/Login'
-import UserPage from './components/UserPage'
-import FileUpload from './components/FileUpload'
-import io from "socket.io-client"
 
-const socket = io.connect("http://localhost:5000")
+// import components
+import logo from './logo.svg';
+import Home from './components/Home';
+import Login from './components/Login';
+import UserPage from './components/UserPage';
+import FileUpload from './components/FileUpload';
 
+// initialize socket.io
+import { io } from "socket.io-client";
+const socket = io.connect("http://localhost:3001");
 
 function App() {
   // loginCredentials is an object containing 3 variables:
   // username, password and usertype
-  const [loginCredentials, setLoginCredentials] = useState({})
-  const [successfulLogin, setSuccessfulLogin] = useState(false)
-
-  // emitted events
-  const loginEvent = (data) => {
-    socket.emit("login", data)
-  }
-  // lsitening for events
-  useEffect(() => {
-    socket.on("successfulLogin", (data) => {setSuccessfulLogin(true)})
-  }, [socket])
+  const [loginCredentials, setLoginCredentials] = useState({});
+  const [loginPage, setLoginPage] = useState(false);
+  const [successfulLogin, setSuccessfulLogin] = useState(false);
 
   return (
     <div className="App">
@@ -31,20 +27,26 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="content">
-        <Home/>
-        <Login 
-          loginCredentials = {loginCredentials} 
-          setLoginCredentials = {setLoginCredentials}
-          loginEvent = {loginEvent}/>
+        {!loginPage &&
+          <Home
+            setLogin = {setLoginPage} 
+          />
+        }
+        {loginPage && !successfulLogin &&
+          <Login 
+            socket={socket} 
+            loginCredentials={loginCredentials} 
+            setLoginCredentials={setLoginCredentials}
+            setSuccessfulLogin={setSuccessfulLogin}
+          />
+        }
+        {successfulLogin &&
+          <UserPage username={loginCredentials.username}/>
+        } 
+        {successfulLogin &&
+          <FileUpload socket={socket} />
+        }
       </div>
-      {
-        successfulLogin && 
-        <div className='successfulLogin'>
-          <UserPage username = {loginCredentials.username}/>
-          <FileUpload/>
-        </div>
-      }
-      
     </div>
   )
 }

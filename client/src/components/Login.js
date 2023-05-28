@@ -1,22 +1,42 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-function Login({ loginCredentials, setLoginCredentials, loginEvent}) {
+function Login({ socket, loginCredentials, setLoginCredentials, 
+    setSuccessfulLogin}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('student')
     const [isShown, setIsSHown] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [invalid, setInvalid] = useState(false);
     
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const credentials = { username, password, usertype }
-        setLoginCredentials( credentials )
-        console.log(credentials)
-        loginEvent(credentials)
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        setLoginCredentials( { username, password, usertype } );
+        setIsSubmitted(true);
     }
 
     const togglePassword = () => {
         setIsSHown((isShown) => !isShown);
     };
+
+    useEffect(()=> {
+        socket.on("recievedCredentials", (data) => {
+            console.log(`CREDENTIALS FOR ${data.username} RECIEVED`);
+            setSuccessfulLogin(true);
+            setInvalid(false);
+        });
+        socket.on("invalidCredentials", () => {
+            setInvalid(true);
+        });
+    }, [socket]) 
+
+    useEffect(() => {
+        if(isSubmitted) {
+            console.log("sending credentials to the server");
+            socket.emit("loginAttempt", loginCredentials);
+            setIsSubmitted(false);
+        } 
+    }, [loginCredentials])
 
     return (
         <div className="login">
@@ -41,7 +61,8 @@ function Login({ loginCredentials, setLoginCredentials, loginEvent}) {
                     placeholder="enter your Password"
                 />
                 <label style={{
-                    display: 'flex'
+                    display: 'flex',
+                    fontSize: 'calc(0px + 2vmin)'
                 }}>Show password?
                     <input
                         className="password-checkbox"
@@ -51,7 +72,7 @@ function Login({ loginCredentials, setLoginCredentials, loginEvent}) {
                         style={{
                             width: '25px',
                             padding: '6px 10px',
-                            margin: '10px 0',
+                            margin: '5px 0',
                             verticalAlign: 'bottom',
                             position: 'relative'
                         }}
@@ -69,6 +90,9 @@ function Login({ loginCredentials, setLoginCredentials, loginEvent}) {
                 </select>
                 <button>submit</button>
             </form>
+            {invalid && 
+                <p>Invalid Username/Password, Try Again</p>
+            }
         </div>
     )
 }

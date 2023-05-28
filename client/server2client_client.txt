@@ -30,3 +30,20 @@ function App() {
 }
 
 export default App
+
+
+// or we can use the useFetch hook instead
+import useFetch from "./useFetch";
+
+function someFunction() {
+  const { backendData, isPending,  error } = useFetch('/api')
+
+  return (
+    <div> 
+      { error && <div>{error}</div> }
+      { isPending && <div>Loading...</div>}
+      { backendData && ...}
+    </div>  
+  );
+}
+            
