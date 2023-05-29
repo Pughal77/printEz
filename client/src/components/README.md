@@ -2,7 +2,7 @@
 
 this folder contains all the different components used within this project
 
-## fast commands
+## Fast Commands
 
 ### SFC
 
