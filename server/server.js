@@ -42,7 +42,8 @@ io.on("connection", (socket) => {
         // flag to indicate if event was already emitted
         let waiting = true;
 
-        
+        console.log("\n");
+        console.log(credentials);
         // credentials verified
         sshLogin.on("successfulLogin", () => {
             if (waiting) {
@@ -63,7 +64,7 @@ io.on("connection", (socket) => {
         });
         
         // attempt to log in with current credentials
-        console.log(`starting log-in function for ${credentials.username}`);
+        console.log(`attempting to log-in for ${credentials.username}`);
         sshLogin.login(credentials); 
     });
 
