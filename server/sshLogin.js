@@ -31,16 +31,20 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			pass: credentials.password
 		});
 
-		// execute the df -h command to find out disk utilization
-		ssh_options.exec("hostname", {
+		this.hostname(ssh_options, timeoutObj)
+
+		return ssh_options;
+	}
+
+	hostname(sshObject, timeoutObj){
+		// prints hostname
+		sshObject.exec("hostname", {
 			out: (stdout) => {
 				clearTimeout(timeoutObj);
 				this.emit("successfulLogin");
 				console.log(`VALID CREDENTIALS\n HOSTNAME: ${stdout}`);
 			}
 		}).start();
-
-		return;
 	}
 
 	toUnix(credentials){
