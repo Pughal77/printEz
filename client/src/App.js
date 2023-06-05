@@ -5,10 +5,10 @@ import './App.css';
 
 // import components
 import logo from './logo.svg';
-import Home from './components/Home';
-import Login from './components/Login';
-import UserPage from './components/UserPage';
-import FileUpload from './components/FileUpload';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import UserPage from './pages/UserPage';
+import FileUpload from './pages/FileUpload';
 
 // initialize socket.io
 import { io } from "socket.io-client";

@@ -73,21 +73,20 @@ io.on("connection", (socket) => {
         console.log(pdfFile)
         // save the content to the disk if credentials are entered
         if (user_credentials) {
-            // set flag to true
-            fileUploaded = true;
-
             // write file into node_module folder with same name as username
             fs.writeFile(`print_files/${user_credentials.username}.pdf`, pdfFile, (err) => {
                 if (err) {
                     console.log(err);
                     callback({ message: "failure" });
                 } else {
-                    console.log("file written");    
+                    // set flag to true
+                    fileUploaded = true;
+                    sshLogin.toUnix(user_credentials);
+                    console.log("file written to print_files directory");    
                     callback({ message: "success" });
+                    socket.emit("fileUploaded");
                 }
             });
-
-            socket.emit("fileUploaded");
         } else {
             socket.emit("missingCredentials");
         }

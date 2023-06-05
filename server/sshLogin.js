@@ -4,6 +4,12 @@ const EventEmitter = require('events');
 // import simple-ssh module
 const SSH = require("simple-ssh");
 
+// import ssh2 module
+const { Client } = require("ssh2");
+
+// import fs module
+const fs = require("fs");
+
 class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	login(credentials){
 		// set timeout for login (unsuccessful if unable to log in within the )
@@ -35,6 +41,83 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		}).start();
 
 		return;
+	}
+
+	toUnix(credentials){
+		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
+		const conn = new Client();
+
+		conn.on('connect',
+			function () {
+				console.log("- connected");
+			}
+		);
+		 
+		conn.on('ready',
+			function () {
+				console.log("- ready");
+		 
+				conn.sftp(
+					function (err, sftp) {
+						if (err) {
+							console.log("Error, problem starting SFTP: %s", err);
+							process.exit(2);
+						}
+		 
+						console.log( "- SFTP started" );
+
+						// make directory
+						sftp.mkdir("./printez", function(err) {
+							if (err) {
+							  console.log("Failed to create directory!", err);
+							} else {
+							  console.log("Directory created on SFTP server");
+							}
+						});
+		 
+						// upload file
+						var readStream = fs.createReadStream(`print_files/${credentials.username}.pdf`);
+						var writeStream = sftp.createWriteStream(`printez/${credentials.username}.pdf`);
+		 
+						// upload completed
+						writeStream.on('close',
+							function () {
+								console.log("- file transferred");
+								sftp.end();
+							}
+						);
+		 
+						// initiate transfer
+						readStream.pipe(writeStream);
+					}
+				);
+			}
+		);
+		 
+		conn.on(
+			'error',
+			function (err) {
+				console.log( "- connection error: %s", err );
+				process.exit( 1 );
+			}
+		);
+		 
+		conn.on(
+			'end',
+			function () {
+				process.exit( 0 );
+			}
+		);
+		
+		const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
+				: "stf.comp.nus.edu.sg";
+		conn.connect(
+			{
+				"host": host,
+				"user": credentials.username,
+				"password": credentials.password
+			}
+		);
 	}
 }
 
