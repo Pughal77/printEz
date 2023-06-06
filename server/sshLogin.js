@@ -57,44 +57,20 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	}
 
 	printFile(credentials){
-		const timeoutObj = this.createTimeout(
-			"Cannot print file! \n",
-			1500,
-			""
-		)
 		const sshObject = this.login(credentials)
 		// prints hostname
 		// `lpr -P psc008 printez/${credentials.username}.pdf`
-		sshObject.exec(`ls`, {
+		// wierd problem thing times out when doing the lpr command but doesnt with ls or other cmds
+		sshObject
+		.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {})
+		.exec(`lpq -P psc008`, {
 			out: (stdout) => {
-				clearTimeout(timeoutObj);
-				console.log(`printing`);
-				this.printQ(credentials).start();
-			},
-			err: (stderr) => {
-				console.log(stderr)
-			}
-		}).start();
-	}
-
-	// dk how to sync with printFile keep it here for now
-	printQ(credentials){
-		const timeoutObj = this.createTimeout(
-			"Cannot show print Q! \n",
-			1500,
-			""
-		)
-
-		const sshObject = this.login(credentials)
-
-		return sshObject.exec(`lpq -P psc008`, {
-			out: (stdout) => {
-				clearTimeout(timeoutObj);
-				this.emit("print queue");
 				console.log(`print Q: ${stdout}`);
 			}
 		})
+		.start();
 	}
+	
 	toUnix(credentials){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
 		const conn = new Client();
