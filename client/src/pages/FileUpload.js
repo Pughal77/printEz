@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PrintFile from "./printFile";
 
 function FileUpload({ socket }) {
     const [selectedFile, setSelectedFile] = useState();
@@ -35,9 +36,9 @@ function FileUpload({ socket }) {
         socket.on("fileUploaded", () => {
             console.log("FILE UPLOADED");
             setIsUploaded(true);
-            setTimeout(() => {
-                setIsUploaded(false);
-              }, 1500);
+            // setTimeout(() => {
+            //     setIsUploaded(false);
+            //   }, 1500);
         })
     }, [socket]) 
 
@@ -55,7 +56,12 @@ function FileUpload({ socket }) {
                 <p>Please Choose A File</p>
             }
             {isUploaded && 
-                <p>File Successfully Uploaded</p>
+                <div>
+                    <p>File Successfully Uploaded</p>
+                    < PrintFile
+                        socket={socket} 
+                    />
+                </div>
             }
         </div>
      );

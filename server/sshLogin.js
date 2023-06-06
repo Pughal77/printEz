@@ -9,40 +9,68 @@ const { Client } = require("ssh2");
 
 // import fs module
 const fs = require("fs");
+const { stderr } = require('process');
 
 class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
-	login(credentials){
-		// set timeout for login (unsuccessful if unable to log in within the )
-		const timeoutObj = setTimeout(() => {
-			console.log("INVALID CREDENTIALS \n");
-			this.emit("unsuccessfulLogin")
+	// create new ssh
+	createTimeout(text, time, toDo){
+		return setTimeout(() => {
+			console.log(text);
+			this.emit(toDo)
 			return;
-		  }, 1500);
+		  }, time);
+	}
 
+	login(credentials){
 		const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
 				: "stf.comp.nus.edu.sg";
 		
 		// console.log(`name: ${credentials.username}, password: ${credentials.password}`);
 		// console.log(host);
 
-		const ssh_options = new SSH({
+		const sshObject = new SSH({
 			host: host,
 			user: credentials.username,
 			pass: credentials.password
 		});
 
-		// execute the df -h command to find out disk utilization
-		ssh_options.exec("hostname", {
+		return sshObject;
+	}
+
+	loginAttempt(credentials){
+		// set timeout for login (unsuccessful if unable to log in within the )
+		const timeoutObj = this.createTimeout(
+			"INVALID CREDENTIALS \n",
+			1500,
+			"unsuccessfulLogin"
+		)
+
+		const sshObject = this.login(credentials)
+		// prints hostname
+		sshObject.exec("hostname", {
 			out: (stdout) => {
 				clearTimeout(timeoutObj);
 				this.emit("successfulLogin");
 				console.log(`VALID CREDENTIALS\n HOSTNAME: ${stdout}`);
 			}
 		}).start();
-
-		return;
 	}
 
+	printFile(credentials){
+		const sshObject = this.login(credentials)
+		// prints hostname
+		// `lpr -P psc008 printez/${credentials.username}.pdf`
+		// wierd problem thing times out when doing the lpr command but doesnt with ls or other cmds
+		sshObject
+		.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {})
+		.exec(`lpq -P psc008`, {
+			out: (stdout) => {
+				console.log(`print Q: ${stdout}`);
+			}
+		})
+		.start();
+	}
+	
 	toUnix(credentials){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
 		const conn = new Client();
@@ -66,6 +94,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		 
 						console.log( "- SFTP started" );
 
+						
 						// make directory
 						sftp.mkdir("./printez", function(err) {
 							if (err) {
