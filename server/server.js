@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
         
         // attempt to log in with current credentials
         console.log(`attempting to log-in for ${credentials.username}`);
-        sshLogin.login(credentials); 
+        sshLogin.hostname(credentials); 
     });
 
     // receiving pdf file
@@ -91,6 +91,14 @@ io.on("connection", (socket) => {
             socket.emit("missingCredentials");
         }
     });
+
+    socket.on("printAttempt", () => {
+        if (user_credentials) {
+            sshLogin.printFile(user_credentials)
+        } else {
+            socket.emit("missingCredentials");
+        }
+    })
 
     socket.on("disconnect", () => {
         // if file has been uploaded, delete file

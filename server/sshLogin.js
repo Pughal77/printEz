@@ -9,8 +9,10 @@ const { Client } = require("ssh2");
 
 // import fs module
 const fs = require("fs");
+const { stderr } = require('process');
 
 class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
+	// create new ssh
 	login(credentials){
 		// set timeout for login (unsuccessful if unable to log in within the )
 		const timeoutObj = setTimeout(() => {
@@ -31,22 +33,49 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			pass: credentials.password
 		});
 
-		this.hostname(ssh_options, timeoutObj)
+		const result = {
+			sshObject: ssh_options,
+			timeout: timeoutObj
+		}
 
-		return ssh_options;
+		return result;
 	}
 
-	hostname(sshObject, timeoutObj){
+	hostname(credentials){
+		const { sshObject, timeout } = this.login(credentials)
 		// prints hostname
 		sshObject.exec("hostname", {
 			out: (stdout) => {
-				clearTimeout(timeoutObj);
+				clearTimeout(timeout);
 				this.emit("successfulLogin");
 				console.log(`VALID CREDENTIALS\n HOSTNAME: ${stdout}`);
 			}
 		}).start();
 	}
 
+	printFile(credentials){
+		const { sshObject, timeout } = this.login(credentials)
+		// prints hostname
+		sshObject.exec(`lpr -P psc008 printEz/${credentials.username}.ps;`, {
+			out: (stdout) => {
+				clearTimeout(timeout);
+				console.log(`printing`);
+			},
+			err: (stderr) => {
+				console.log(stderr)
+			}
+		}).start();
+	}
+	// dk how to sync with printFile keep it here for now
+	printQ({ sshObject, timeout }){
+		return sshObject.exec(`lpq -P psc008`, {
+			out: (stdout) => {
+				clearTimeout(timeout);
+				this.emit("print queue");
+				console.log(`print Q: ${stdout}`);
+			}
+		}).start();
+	}
 	toUnix(credentials){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
 		const conn = new Client();
@@ -70,6 +99,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		 
 						console.log( "- SFTP started" );
 
+						
 						// make directory
 						sftp.mkdir("./printez", function(err) {
 							if (err) {
