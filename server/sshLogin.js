@@ -19,7 +19,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			console.log("INVALID CREDENTIALS \n");
 			this.emit("unsuccessfulLogin")
 			return;
-		  }, 1500);
+		  }, 15000);
 
 		const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
 				: "stf.comp.nus.edu.sg";
@@ -56,7 +56,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	printFile(credentials){
 		const { sshObject, timeout } = this.login(credentials)
 		// prints hostname
-		sshObject.exec(`lpr -P psc008 printEz/${credentials.username}.ps;`, {
+		sshObject.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {
 			out: (stdout) => {
 				clearTimeout(timeout);
 				console.log(`printing`);

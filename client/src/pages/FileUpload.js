@@ -38,7 +38,7 @@ function FileUpload({ socket }) {
             setIsUploaded(true);
             // setTimeout(() => {
             //     setIsUploaded(false);
-            //   }, 15000);
+            //   }, 1500);
         })
     }, [socket]) 
 
