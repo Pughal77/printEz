@@ -9,6 +9,9 @@ const { Client } = require("ssh2");
 
 // import fs module
 const fs = require("fs");
+const { stdout } = require('process');
+
+var readyToPrint = false;
 
 class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	login(credentials){
@@ -41,6 +44,34 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		}).start();
 
 		return;
+	}
+
+	printFile(credentials){
+		if (readyToPrint) {;
+
+			const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
+					: "stf.comp.nus.edu.sg";
+
+			const ssh_options = new SSH({
+				host: host,
+				user: credentials.username,
+				pass: credentials.password
+			});
+
+			// execute lpr command to print pdf
+			ssh_options.exec(`lpr -P psc011 printez/${credentials.username}.pdf`, {
+				// out: (stdout) => {
+				// 	// clearTimeout(timeoutObj);
+				// 	console.log(`SUCCESSFULLY PRINTED\n${stdout}`);
+				// }
+			}).exec(`lpq -P psc011`, {
+				out: (stdout) => {
+					console.log(stdout);
+				}
+			}).start();
+
+			return;
+		}
 	}
 
 	toUnix(credentials){
@@ -82,6 +113,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 						// upload completed
 						writeStream.on('close',
 							function () {
+								readyToPrint = true;
 								console.log("- file transferred");
 								sftp.end();
 							}

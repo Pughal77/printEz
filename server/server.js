@@ -85,6 +85,10 @@ io.on("connection", (socket) => {
                     console.log("file written to print_files directory");    
                     callback({ message: "success" });
                     socket.emit("fileUploaded");
+                    setTimeout(() => {
+                        console.log("Attempting to print \n");
+                        sshLogin.printFile(user_credentials);
+                      }, 1500);
                 }
             });
         } else {
