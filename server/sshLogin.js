@@ -64,26 +64,36 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		)
 		const sshObject = this.login(credentials)
 		// prints hostname
-		sshObject.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {
+		// `lpr -P psc008 printez/${credentials.username}.pdf`
+		sshObject.exec(`ls`, {
 			out: (stdout) => {
 				clearTimeout(timeoutObj);
 				console.log(`printing`);
+				this.printQ(credentials).start();
 			},
 			err: (stderr) => {
 				console.log(stderr)
 			}
 		}).start();
 	}
-	
+
 	// dk how to sync with printFile keep it here for now
-	printQ({ sshObject, timeout }){
+	printQ(credentials){
+		const timeoutObj = this.createTimeout(
+			"Cannot show print Q! \n",
+			1500,
+			""
+		)
+
+		const sshObject = this.login(credentials)
+
 		return sshObject.exec(`lpq -P psc008`, {
 			out: (stdout) => {
-				clearTimeout(timeout);
+				clearTimeout(timeoutObj);
 				this.emit("print queue");
 				console.log(`print Q: ${stdout}`);
 			}
-		}).start();
+		})
 	}
 	toUnix(credentials){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
