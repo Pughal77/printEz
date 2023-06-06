@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
         
         // attempt to log in with current credentials
         console.log(`attempting to log-in for ${credentials.username}`);
-        sshLogin.hostname(credentials); 
+        sshLogin.loginAttempt(credentials); 
     });
 
     // receiving pdf file
