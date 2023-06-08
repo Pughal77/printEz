@@ -1,6 +1,6 @@
 import { useState } from "react";
-import FileUpload from "../components/UserPage/FileUpload";
-import PrintFile from "../components/UserPage/printFile";
+import FileUpload from "../components/FileUpload";
+import PrintFile from "../components/PrintFile";
 
 function UserPage({username , socket}) {
     const [isUploaded, setIsUploaded] = useState(false);

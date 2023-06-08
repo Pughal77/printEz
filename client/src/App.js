@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 // import components
-import logo from './logo.svg';
-import Home from './pages/Home';
+import logo from './assets/logo.svg';
+import Home from './pages/Welcome';
 import Login from './pages/Login';
 import UserPage from './pages/UserPage';
-import FileUpload from './components/UserPage/FileUpload';
+import TopBanner from './components/TopBanner';
 
 // initialize socket.io
 import { io } from "socket.io-client";
@@ -22,32 +22,30 @@ function App() {
   const [successfulLogin, setSuccessfulLogin] = useState(false);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-      <div className="content">
-        {!loginPage &&
-          <Home
-            setLogin = {setLoginPage} 
-          />
-        }
-        {loginPage && !successfulLogin &&
-          <Login 
-            socket={socket} 
-            loginCredentials={loginCredentials} 
-            setLoginCredentials={setLoginCredentials}
-            setSuccessfulLogin={setSuccessfulLogin}
-          />
-        }
-        {successfulLogin &&
-          <UserPage 
-            username={loginCredentials.username} 
-            socket={socket}
-          />
-        }
-      </div>
+    <div>
+      <TopBanner/>
+      
+      {!loginPage &&
+        <Home
+          setLogin = {setLoginPage} 
+        />
+      }
+      {loginPage && !successfulLogin &&
+        <Login 
+          socket={socket} 
+          loginCredentials={loginCredentials} 
+          setLoginCredentials={setLoginCredentials}
+          setSuccessfulLogin={setSuccessfulLogin}
+        />
+      }
+      {successfulLogin &&
+        <UserPage 
+          username={loginCredentials.username} 
+          socket={socket}
+        />
+      }
     </div>
+    
   )
 }
 
