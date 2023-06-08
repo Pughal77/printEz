@@ -98,6 +98,20 @@ io.on("connection", (socket) => {
         } else {
             socket.emit("missingCredentials");
         }
+        sshLogin.on("readJobQ", (data) => {
+            socket.emit("readJobQ", data)
+        })
+    })
+
+    socket.on("readJobQReq", () => {
+        if (user_credentials) {
+            sshLogin.jobQ(user_credentials)
+        } else {
+            socket.emit("missingCredentials");
+        }
+        sshLogin.on("readJobQRes", (data) => {
+            socket.emit("readJobQRes", data)
+        })
     })
 
     socket.on("disconnect", () => {

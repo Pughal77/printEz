@@ -1,9 +1,11 @@
 import { useState } from "react";
 import FileUpload from "../components/UserPage/FileUpload";
-import PrintFile from "../components/UserPage/printFile";
+import PrintFile from "../components/UserPage/PrintFile";
+import JobQ from "../components/UserPage/JobQ";
 
 function UserPage({username , socket}) {
     const [isUploaded, setIsUploaded] = useState(false);
+    const [jobCreated, setjobCreated] = useState(false);
     return ( 
         <div className="userPage">
             <h1>Welcome, {username}</h1>
@@ -17,6 +19,7 @@ function UserPage({username , socket}) {
                     < PrintFile
                         socket={socket} 
                     />
+                    < JobQ socket={socket}/>
                 </div>
             }
         </div>
