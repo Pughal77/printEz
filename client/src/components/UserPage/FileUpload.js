@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import PrintFile from "./printFile";
 
-function FileUpload({ socket }) {
+function FileUpload({ isUploaded, setIsUploaded, socket }) {
     const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
     const [isWarning, setIsWarning] = useState(false);
-    const [isUploaded, setIsUploaded] = useState(false);
 
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -55,14 +53,7 @@ function FileUpload({ socket }) {
             {isWarning && 
                 <p>Please Choose A File</p>
             }
-            {isUploaded && 
-                <div>
-                    <p>File Successfully Uploaded</p>
-                    < PrintFile
-                        socket={socket} 
-                    />
-                </div>
-            }
+            {isUploaded && <p>File Successfully Uploaded</p>}
         </div>
      );
 }

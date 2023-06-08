@@ -12,7 +12,7 @@ const fs = require("fs");
 const { stderr } = require('process');
 
 class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
-	// create new ssh
+	// create new timeOutObj
 	createTimeout(text, time, toDo){
 		return setTimeout(() => {
 			console.log(text);
@@ -20,7 +20,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			return;
 		  }, time);
 	}
-
+	// create new SSh instance
 	login(credentials){
 		const host = credentials.usertype == "student" ? "stu.comp.nus.edu.sg"
 				: "stf.comp.nus.edu.sg";

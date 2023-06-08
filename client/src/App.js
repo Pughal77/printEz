@@ -8,7 +8,7 @@ import logo from './logo.svg';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import UserPage from './pages/UserPage';
-import FileUpload from './pages/FileUpload';
+import FileUpload from './components/UserPage/FileUpload';
 
 // initialize socket.io
 import { io } from "socket.io-client";
@@ -41,10 +41,10 @@ function App() {
           />
         }
         {successfulLogin &&
-          <UserPage username={loginCredentials.username}/>
-        } 
-        {successfulLogin &&
-          <FileUpload socket={socket} />
+          <UserPage 
+            username={loginCredentials.username} 
+            socket={socket}
+          />
         }
       </div>
     </div>
