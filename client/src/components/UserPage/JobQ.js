@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 export default function JobQ({ socket }) {
     const [jobQ, setJobQ] = useState("")
     useEffect(() => {
+        socket.emit("readJobQReq")
         socket.on("readJobQRes", (data) => {
             console.log(data)
             setJobQ(data)
