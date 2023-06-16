@@ -24,12 +24,13 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from '../utils/theme'
 
 function Login({ socket, loginCredentials, setLoginCredentials, 
-    setSuccessfulLogin}) {
+    setSuccessfulLogin, quotas, setQuotas}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('')
     const [isShown, setIsSHown] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [quotasUpdating, setQuotasUpdating] = useState(false);
     const [invalid, setInvalid] = useState(false);
     
     const handleSubmit = async(e) => {
@@ -47,10 +48,11 @@ function Login({ socket, loginCredentials, setLoginCredentials,
     };
 
     // reacts to events recieved from socket
-    useEffect(()=> {
+    useEffect(() => {
         socket.on("recievedCredentials", (data) => {
-            console.log(`CREDENTIALS FOR ${data.username} RECIEVED`);
-            setSuccessfulLogin(true);
+            console.log(`CREDENTIALS SUCCESSFULLY RECIEVED`);
+            setQuotasUpdating(true);
+            setQuotas(data);
             setInvalid(false);
         });
         socket.on("invalidCredentials", () => {
@@ -58,7 +60,15 @@ function Login({ socket, loginCredentials, setLoginCredentials,
         });
     }, [socket]) 
 
-    // 
+    // changes successfulLogin flag only when quotas have updated
+    useEffect(() => {
+        if (quotasUpdating) {
+            console.log(quotas);
+            setSuccessfulLogin(true);
+        }
+    }, [quotas])
+
+    // only emits loginAttempt when loginCredentials have updated
     useEffect(() => {
         if(isSubmitted) {
             console.log("sending credentials to the server");

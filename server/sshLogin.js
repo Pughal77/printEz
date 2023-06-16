@@ -47,11 +47,21 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 
 		const sshObject = this.login(credentials)
 		// prints hostname
-		sshObject.exec("hostname", {
+		sshObject.exec("pusage", {
 			out: (stdout) => {
-				clearTimeout(timeoutObj);
-				this.emit("successfulLogin");
-				console.log(`VALID CREDENTIALS\n HOSTNAME: ${stdout}`);
+
+				// obtain the relevant quotas from stdout
+				const text = stdout.toString();
+				const editedText = text.substring(text.indexOf("Available") + 17);
+				const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
+				const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
+
+				console.log(`VALID CREDENTIALS\n`);
+				console.log(`NORMAL QUOTA: ${normalQuota}`);
+				console.log(`COLOR QUOTA: ${colorQuota}`);
+
+				clearTimeout(timeoutObj);	
+				this.emit("successfulLogin", {normalQuota, colorQuota});
 			}
 		}).start();
 	}

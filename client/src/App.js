@@ -18,6 +18,9 @@ function App() {
   // loginCredentials is an object containing 3 variables:
   // username, password and usertype
   const [loginCredentials, setLoginCredentials] = useState({});
+  // quotas contain the available normal quota and color quota of the user
+  const [quotas, setQuotas] = useState({});
+  // variables to help control page logic
   const [loginPage, setLoginPage] = useState(false);
   const [successfulLogin, setSuccessfulLogin] = useState(false);
 
@@ -36,11 +39,14 @@ function App() {
           loginCredentials={loginCredentials} 
           setLoginCredentials={setLoginCredentials}
           setSuccessfulLogin={setSuccessfulLogin}
+          quotas={quotas}
+          setQuotas={setQuotas}
         />
       }
       {successfulLogin &&
         <UserPage 
           username={loginCredentials.username} 
+          quotas={quotas}
           socket={socket}
         />
       }
