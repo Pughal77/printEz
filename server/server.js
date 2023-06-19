@@ -45,11 +45,11 @@ io.on("connection", (socket) => {
         console.log("\n");
         console.log(credentials);
         // credentials verified
-        sshLogin.on("successfulLogin", () => {
+        sshLogin.on("successfulLogin", (quotas) => {
             if (waiting) {
                 console.log("emitting 'recieved Credentials'")
                 user_credentials = credentials;
-                socket.emit("recievedCredentials", credentials);
+                socket.emit("recievedCredentials", quotas);
                 waiting = false;
             }
         });
