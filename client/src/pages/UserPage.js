@@ -1,7 +1,7 @@
 import { useState } from "react";
-import FileUpload from "../components/UserPage/FileUpload";
-import PrintFile from "../components/UserPage/PrintFile";
-import JobQ from "../components/UserPage/JobQ";
+import FileUpload from "../components/FileUpload";
+import PrintFile from "../components/PrintFile";
+import JobQ from "../components/JobQ";
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
