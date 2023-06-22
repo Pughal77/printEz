@@ -68,14 +68,24 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 
 	printFile(credentials){
 		const sshObject = this.login(credentials)
-		// prints hostname
-		// `lpr -P psc008 printez/${credentials.username}.pdf`
-		// wierd problem thing times out when doing the lpr command but doesnt with ls or other cmds
 		sshObject
 		.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {})
 		.exec(`lpq -P psc008`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
+				this.emit("readJobQRes", stdout)
+			}
+		})
+		.start();
+	}
+
+	jobQ(credentials){
+		const sshObject = this.login(credentials)
+		sshObject
+		.exec(`lpq -P psc008`, {
+			out: (stdout) => {
+				console.log(`print Q: ${stdout}`);
+				this.emit("readJobQRes", stdout)
 			}
 		})
 		.start();

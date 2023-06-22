@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FileUpload from "../components/FileUpload";
 import PrintFile from "../components/PrintFile";
+import JobQ from "../components/JobQ";
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -11,6 +12,7 @@ import Typewriter from "typewriter-effect";
 
 function UserPage({username, quotas, socket}) {
     const [isUploaded, setIsUploaded] = useState(false);
+    const [jobCreated, setjobCreated] = useState(false);
     return ( 
         <ThemeProvider theme={theme}>
             <CssBaseline/>
@@ -75,9 +77,14 @@ function UserPage({username, quotas, socket}) {
                 socket={socket}
             />
             {isUploaded && 
+            <div>
                 < PrintFile
-                        socket={socket} 
+                    socket={socket} 
                 />
+                < JobQ 
+                    socket={socket}
+                />
+            </div>
             }
         </ThemeProvider>
      );
