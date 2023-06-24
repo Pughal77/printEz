@@ -77,6 +77,13 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			}
 		})
 		.start();
+		// sshObject
+		// .exec('ls', {
+		// 	out: (stdout) => {
+		// 		this.emit("readJobQRes", "ganyi-w's job has been processed: Dan Jurafsky and Ja.1 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive pughal     158  printez/pughal.pdf                    117892 bytes")
+		// 	}
+		// })
+		// .start();
 	}
 
 	jobQ(credentials){
@@ -88,6 +95,13 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				this.emit("readJobQRes", stdout)
 			}
 		})
+		.start();
+	}
+
+	deleteJob(credentials, id) {
+		const sshObject = this.login(credentials)
+		sshObject
+		.exec(`lprm -P psc008 ${id}`, {})
 		.start();
 	}
 	
