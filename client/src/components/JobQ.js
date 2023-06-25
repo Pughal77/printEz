@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
+import read from "./StdoutReader"
 
 export default function JobQ({ socket }) {
-    const [jobQ, setJobQ] = useState("")
+    const [jobList, setJobList] = useState([])
     useEffect(() => {
         socket.emit("readJobQReq")
         socket.on("readJobQRes", (data) => {
-            console.log(data)
-            setJobQ(data)
+            read(data, setJobList)
         })
     }, [socket])
 
@@ -14,7 +14,11 @@ export default function JobQ({ socket }) {
       e.preventDefault()
       socket.emit("readJobQReq")
     }
-    
+
+    const handleDelete = (id) => {
+      socket.emit("delReq", id)
+      socket.emit("readJobQReq")
+    }
   return (
     <div>
       <button onClick={handleClick}>
@@ -22,7 +26,34 @@ export default function JobQ({ socket }) {
       </button>
       <div>
         Print Queue for psc008: <br />
-        {jobQ}
+        { jobList.length > 0 && 
+        <table>
+          <tr>
+            <th>rank</th>
+            <th>owner</th>
+            <th>id</th>
+            <th>file</th>
+            <th>size</th>
+            <th>delete</th>
+          </tr>
+          {jobList.map((job) => {
+            // todo job Element
+            return (
+              <tr key = {job.id}>
+                <td>{job.rank}</td>
+                <td>{job.owner}</td>
+                <td>{job.id}</td>
+                <td>{job.file}</td>
+                <td>{job.size}</td>
+                <td><button onClick={() => {handleDelete(job.id)}}>delete job</button></td>
+                </tr>
+            )
+            })}
+        </table>
+        }
+        { !jobList.length &&
+          <p>no entries</p>
+        }
       </div>
     </div>
     
