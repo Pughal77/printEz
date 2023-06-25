@@ -47,7 +47,6 @@ export default function read (stdout, setJobList) {
                 info[4] = info[4] + stdout.slice(i, i + 6)
                 result.push(new job(...info))
                 info = []
-                i += 5
             }
         }
         setJobList(result)
