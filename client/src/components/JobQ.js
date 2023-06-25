@@ -17,8 +17,8 @@ export default function JobQ({ socket }) {
 
     const handleDelete = (id) => {
       socket.emit("delReq", id)
+      socket.emit("readJobQReq")
     }
-    console.log(jobList[0])
   return (
     <div>
       <button onClick={handleClick}>

@@ -44,10 +44,11 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			1500,
 			"unsuccessfulLogin"
 		)
-
+		
 		const sshObject = this.login(credentials)
 		// prints hostname
-		sshObject.exec("pusage", {
+		sshObject
+		.exec("pusage", {
 			out: (stdout) => {
 
 				// obtain the relevant quotas from stdout
@@ -100,6 +101,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 
 	deleteJob(credentials, id) {
 		const sshObject = this.login(credentials)
+		console.log(`${id}`)
 		sshObject
 		.exec(`lprm -P psc008 ${id}`, {})
 		.start();
