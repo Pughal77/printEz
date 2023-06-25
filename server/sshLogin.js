@@ -44,10 +44,11 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			1500,
 			"unsuccessfulLogin"
 		)
-
+		
 		const sshObject = this.login(credentials)
 		// prints hostname
-		sshObject.exec("pusage", {
+		sshObject
+		.exec("pusage", {
 			out: (stdout) => {
 
 				// obtain the relevant quotas from stdout
@@ -77,6 +78,13 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			}
 		})
 		.start();
+		// sshObject
+		// .exec('ls', {
+		// 	out: (stdout) => {
+		// 		this.emit("readJobQRes", "ganyi-w's job has been processed: Dan Jurafsky and Ja.1 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive pughal     158  printez/pughal.pdf                    117892 bytes")
+		// 	}
+		// })
+		// .start();
 	}
 
 	jobQ(credentials){
@@ -88,6 +96,14 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				this.emit("readJobQRes", stdout)
 			}
 		})
+		.start();
+	}
+
+	deleteJob(credentials, id) {
+		const sshObject = this.login(credentials)
+		console.log(`${id}`)
+		sshObject
+		.exec(`lprm -P psc008 ${id}`, {})
 		.start();
 	}
 	

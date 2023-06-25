@@ -8,8 +8,7 @@ import React from 'react'
 import { theme } from '../utils/theme'
 
 export default function PrintFile({ socket }) {
-    const handleClick = (e) => {
-        e.preventDefault()
+    const handleClick = () => {
         socket.emit("printAttempt")
     }
   return (
