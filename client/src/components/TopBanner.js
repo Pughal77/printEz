@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { ThemeProvider } from '@emotion/react';
 
 import logo from '../assets/logo.svg';
-import { theme } from '../utils/theme';
+import { theme } from '../styles/theme';
 
 export default function TopBanner() {
     return (

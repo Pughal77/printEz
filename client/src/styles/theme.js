@@ -4,17 +4,19 @@ export const theme = createTheme({
     palette: {
         primary: {
         // light: will be calculated from palette.primary.main,
-        main: '#024033',
+        main: '#31d1d4',
         // dark: will be calculated from palette.primary.main,
         // contrastText: will be calculated to contrast with palette.primary.main
         },
         secondary: {
         // light: will be calculated from palette.primary.main,
-        main: '#979797',
+        main: '#8732d1',
         // dark: will be calculated from palette.secondary.main,
         contrastText: '#ffcc00',
         },
-
+        background: {
+            default: "#e4f0e2"
+        },
         custom: {
         // light: '#ffa726',
         main: '#986afd',

@@ -1,27 +1,33 @@
 import { useState, useEffect } from "react"
 
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import IconButton from '@mui/material/IconButton';
+import { 
+    Avatar,
+    CssBaseline,
+    Box,
+    TextField,
+    InputLabel,
+    MenuItem,
+    FormControl,
+    Select,
+    Button,
+    Typography,
+    Container,
+    OutlinedInput,
+    InputAdornment,
+    Alert,
+    AlertTitle,
+    IconButton
+} from '@mui/material';
+
+import {
+    Visibility,
+    VisibilityOff
+} from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import { ThemeProvider } from '@emotion/react';
 
-import { theme } from '../utils/theme'
+import { theme } from '../styles/theme'
 
 function Login({ socket, loginCredentials, setLoginCredentials, 
     setSuccessfulLogin, quotas, setQuotas}) {

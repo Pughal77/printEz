@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 // import components
-import logo from './assets/logo.svg';
 import Home from './pages/Welcome';
 import Login from './pages/Login';
 import UserPage from './pages/UserPage';

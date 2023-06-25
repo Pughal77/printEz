@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@emotion/react';
 
 import React from 'react'
-import { theme } from '../utils/theme'
+import { theme } from '../styles/theme'
 
 export default function PrintFile({ socket }) {
     const handleClick = () => {

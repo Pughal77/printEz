@@ -1,9 +1,8 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Box, Button } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 
-import { theme } from '../utils/theme';
+import { theme } from '../styles/theme';
 import Typewriter from "typewriter-effect";
 
 function Home({setLogin}) {
@@ -22,10 +21,10 @@ function Home({setLogin}) {
                 width: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
                 fontSize: 'calc(20px + 2vmin)',
                 color: '#024033',
                 marginBottom: '30px',
+                alignItems: 'center',
                 textAlign: 'center',
                 fontWeight: 800,
                 }}
@@ -33,15 +32,15 @@ function Home({setLogin}) {
                 <Typewriter
                     onInit={(typewriter) => {
                         typewriter
-                            .typeString("WELCOME TO PRINTEZ")
+                            .typeString("Printing made easier")
                             .start();
                     }}
                 />
                 <Button 
-                    variant="contained"
+                    variant="outlined"
                     sx={{
                         fontSize: 'calc(20px + 2vmin)',
-                        width: '50%',
+                        width: '25%',
                         borderRadius: '10px',
                         marginTop: '30px',
                     }}
