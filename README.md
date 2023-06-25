@@ -32,7 +32,7 @@ $ cd client
 $ npm run start
 ```
 
-To host our server open another terminal at the project directory:
+To host our server open another terminal at the project directory and:
 ```
 $ cd server
 $ npm run dev
