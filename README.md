@@ -43,11 +43,11 @@ $ npm run dev
 
 ## Screenshots
 Our welcome page:
-
+![Welcome](client/src/assets/welcome.png)
 Our login page:
-
+![Login](client/src/assets/login.png)
 Our user page:
-
+![UploadPage](client/src/assets/uploadPage.png)
 ## Demo
 Watch our video demo here!:
 https://youtu.be/uFCc56Jf9ro
