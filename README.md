@@ -7,6 +7,8 @@ Our Orbital project by James and Pughal!
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Screenshots](#screenshots)
+* [Demo](#demo)
 
 # General info
 A react app that is able to send and delete print requests to the printers in SOC.
@@ -32,8 +34,20 @@ $ cd client
 $ npm run start
 ```
 
+
 To host our server open another terminal at the project directory and:
 ```
 $ cd server
 $ npm run dev
 ```
+
+## Screenshots
+Our welcome page:
+
+Our login page:
+
+Our user page:
+
+## Demo
+Watch our video demo here!:
+https://youtu.be/uFCc56Jf9ro
