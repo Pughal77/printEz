@@ -92,9 +92,9 @@ io.on("connection", (socket) => {
         }
     });
 
-    socket.on("printAttempt", () => {
+    socket.on("printAttempt", (printer) => {
         if (user_credentials) {
-            sshLogin.printFile(user_credentials)
+            sshLogin.printFile(user_credentials, printer)
             sshLogin.on("readJobQRes", (data) => {
                 socket.emit("readJobQRes", data)
             })
