@@ -10,6 +10,7 @@ const job = class {
 
 // this function returns an array of print job objects
 export default function read (stdout, setJobList) {
+    // when there are no jobs
     if (stdout[0] === "n"){
         setJobList([])
     } else {
@@ -47,6 +48,7 @@ export default function read (stdout, setJobList) {
                 info[4] = info[4] + stdout.slice(i, i + 6)
                 result.push(new job(...info))
                 info = []
+                i = i + 6
             }
         }
         setJobList(result)
