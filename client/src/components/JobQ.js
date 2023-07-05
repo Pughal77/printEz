@@ -36,7 +36,7 @@ export default function JobQ({ socket }) {
             <th>size</th>
             <th>delete</th>
           </tr>
-          {jobList.map((job) => {
+          { jobList.map((job) => {
             // todo job Element
             return (
               <tr key = {job.id}>
