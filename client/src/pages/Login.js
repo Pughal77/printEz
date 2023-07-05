@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react"
 
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import IconButton from '@mui/material/IconButton';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { 
+    Avatar, 
+    CssBaseline,
+    Box,
+    TextField,
+    InputLabel,
+    MenuItem,
+    FormControl,
+    Select,
+    Button,
+    Typography,
+    Container,
+    OutlinedInput,
+    InputAdornment,
+    Alert,
+    AlertTitle,
+    IconButton,
+} from '@mui/material';
+import LockOutlinedIcon from'@mui/icons-material/LockOutlined';
+import {
+    Visibility,
+    VisibilityOff
+} from '@mui/icons-material';
 import { ThemeProvider } from '@emotion/react';
 
 import { theme } from '../utils/theme'
@@ -58,7 +62,7 @@ function Login({ socket, loginCredentials, setLoginCredentials,
         socket.on("invalidCredentials", () => {
             setInvalid(true);
         });
-    }, [socket]) 
+    }, [socket, setQuotas]) 
 
     // changes successfulLogin flag only when quotas have updated
     useEffect(() => {
@@ -66,7 +70,7 @@ function Login({ socket, loginCredentials, setLoginCredentials,
             console.log(quotas);
             setSuccessfulLogin(true);
         }
-    }, [quotas])
+    }, [quotas, setSuccessfulLogin, quotasUpdating])
 
     // only emits loginAttempt when loginCredentials have updated
     useEffect(() => {
@@ -75,7 +79,7 @@ function Login({ socket, loginCredentials, setLoginCredentials,
             socket.emit("loginAttempt", loginCredentials);
             setIsSubmitted(false);
         } 
-    }, [loginCredentials])
+    }, [socket, isSubmitted, loginCredentials])
 
     return (
         <ThemeProvider theme={theme}>

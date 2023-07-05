@@ -1,4 +1,3 @@
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@emotion/react';
@@ -14,16 +13,15 @@ function Home({setLogin}) {
 
     return ( 
         <ThemeProvider theme={theme}>
-            <CssBaseline/>
             <Box
                 sx={{
                 margin: 0,
-                marginTop: '50px',
+                marginTop: '150px',
                 width: 1,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                fontSize: 'calc(20px + 2vmin)',
+                fontSize: 'calc(40px + 2vmin)',
                 color: '#024033',
                 marginBottom: '30px',
                 textAlign: 'center',
@@ -41,7 +39,7 @@ function Home({setLogin}) {
                     variant="contained"
                     sx={{
                         fontSize: 'calc(20px + 2vmin)',
-                        width: '50%',
+                        width: '25%',
                         borderRadius: '10px',
                         marginTop: '30px',
                     }}

@@ -3,8 +3,11 @@ import FileUpload from "../components/FileUpload";
 import PrintFile from "../components/PrintFile";
 import JobQ from "../components/JobQ";
 
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
+import {
+    CssBaseline, 
+    Box,
+    Typography
+} from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 
 import { theme } from '../utils/theme';
@@ -54,22 +57,12 @@ function UserPage({username, quotas, socket}) {
                 fontWeight: 800,
                 }}
             >
-                <Typewriter
-                    onInit={(typewriter) => {
-                        typewriter
-                            .changeDelay(100)
-                            .typeString(`normal quota: ${quotas.normalQuota}`)
-                            .start();
-                    }}
-                />
-                <Typewriter
-                    onInit={(typewriter) => {
-                        typewriter
-                            .changeDelay(100)
-                            .typeString(`color quota: ${quotas.colorQuota}`)
-                            .start();
-                    }}
-                />
+                <Typography variant="h4" fontWeight= "800">
+                    Normal Quota: {quotas.normalQuota}
+                </Typography>
+                <Typography variant="h4" fontWeight= "800">
+                    Color Quota: {quotas.colorQuota}
+                </Typography>
             </Box>
             <FileUpload 
                 isUploaded={isUploaded} 

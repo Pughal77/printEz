@@ -13,7 +13,7 @@ export default function TopBanner() {
                 sx={{
                 margin: 0,
                 width: 1,
-                minHeight: '30vh',
+                minHeight: '20vh',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -21,7 +21,7 @@ export default function TopBanner() {
                 bgcolor: 'primary.main'
                 }}
             >
-                <img src={logo} style={{height: '30vmin'}}/>
+                <img src={logo} style={{height: '20vmin'}}/>
             </Box>
         </ThemeProvider>
     );
