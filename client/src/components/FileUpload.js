@@ -7,7 +7,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { ThemeProvider } from '@emotion/react';
 
-import { theme } from '../utils/theme'
+import { theme } from '../styles/theme'
 
 function FileUpload({ isUploaded, setIsUploaded, socket }) {
     // variable to store selected file

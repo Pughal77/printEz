@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@emotion/react';
 
-import { theme } from '../utils/theme';
+import { theme } from '../styles/theme';
 import Typewriter from "typewriter-effect";
 
 function UserPage({username, quotas, socket}) {
