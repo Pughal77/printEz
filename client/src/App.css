@@ -1,191 +1,38 @@
-
-
-.App-header {
-    background-color: #024033;
-    min-height: 30vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
+.App {
+  text-align: center;
+}
 
 .App-logo {
-    height: 30vmin;
-    pointer-events: none;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
   }
-
-
-.home {
-    align-items: center;
-    display: block;
-    width: 100%;
 }
 
-.home h1 {
-    font-size: calc(20px + 2vmin);
-    color: #024033;
-    margin-bottom: 30px;
-    text-align: center;
-    width: auto;
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-.home a {
-    font-size: calc(20px + 2vmin);
-    width: 50%;
-    color: white;
-    background-color: #024033;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    margin: 0 auto;
-    text-decoration: none;
-    padding: 15px 15px;
-    display: block;
-    text-align: center;
-    font-weight: bold;
+.App-link {
+  color: #61dafb;
 }
 
-.home a:hover {
-    background-color: #058b6e;
-}
-
-.login {
-    margin: 0 auto;
-    text-align: centre;
-    align-self: center;
-    align-items: left;
-    width: auto;
-}
-
-.login p {
-    text-align: center;
-    font-size: calc(1px + 2vmin);
-    width: 100%;
-    color: white;
-    background-color: #024033;
-    padding: 10px 15px;
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    height: fit-content;
-}
-
-.login h2 {
-    font-size: calc(15px + 2vmin);
-    color: #024033;
-    margin-bottom: 30px;
-    text-align: center;
-    vertical-align: bottom;
-}
-
-.login form {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.login label {
-    text-align: left;
-    font-size: calc(2px + 2vmin);
-}
-
-.login input, .login select {
-    width: 100%;
-    padding: 6px 10px;
-    margin: 10px 0;
-    display: block;
-    font-size: calc(1px + 2vmin);
-    position: relative;
-}
-
-.login button {
-    color: #ffffff;
-    background-color: #024033;
-    width: fit-content;
-    font-size: calc(1px + 2vmin);
-    padding: 10px 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.login button:hover {
-    background-color: #058b6e;
-}
-
-.userPage h1 {
-    font-size: calc(20px + 2vmin);
-    margin-bottom: 30px;
-    width: 100%;
-    color: white;
-    background-color: #04614d;
-    padding: 10px 0px;
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    height: fit-content;
-    margin: 0px;
-}
-
-.fileupload {
-    margin: 0 auto;
-    text-align: centre;
-    align-self: center;
-    align-items: centre;
-    width: auto;
-}
-
-.fileupload form {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.fileupload h2 {
-    font-size: calc(15px + 2vmin);
-    color: #024033;
-    margin-bottom: 30px;
-    text-align: center;
-    vertical-align: bottom;
-}
-
-.fileupload input {
-    border-radius: 5px;
-    color: #ffffff;
-    background-color: #024033;
-    width: 100%;
-    padding: 6px 10px;
-    margin: 10px 0;
-    display: block;
-    font-size: calc(1px + 2vmin);
-    position: relative;
-}
-
-.fileupload button {
-    color: #ffffff;
-    background-color: #024033;
-    width: fit-content;
-    font-size: calc(1px + 2vmin);
-    padding: 10px 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.fileupload button:hover {
-    background-color: #058b6e;
-}
-
-.fileupload p {
-    text-align: center;
-    font-size: calc(1px + 2vmin);
-    width: 100%;
-    color: white;
-    background-color: #04614d;
-    padding: 10px 15px;
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    height: fit-content;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
