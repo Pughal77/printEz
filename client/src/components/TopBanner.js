@@ -1,10 +1,7 @@
-import React from 'react'
-import { TopBannerStyle } from '../style'
+import { TopBannerStyle } from '../style/style'
 
 function TopBanner() {
-  return TopBannerStyle(() => {
-    return <button>lol</button>
-  })
+  return TopBannerStyle()
 }
 
 export default TopBanner
