@@ -1,7 +1,8 @@
 import { createTheme } from '@mui/material/styles';
-import { CssBaseline, Box } from '@mui/material';
+import { CssBaseline, Box, Button } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import logo from './assets/logo.svg';
+import logo from '../assets/logo.svg';
+import Typewriter from "typewriter-effect";
 
 // theme for the whole page
 const theme = createTheme({
@@ -19,7 +20,7 @@ const theme = createTheme({
         contrastText: '#ffcc00',
         },
         background: {
-            default: "#e4f0e2"
+            default: "#ffffff"
         },
         // Used by `getContrastText()` to maximize the contrast between
         // the background and the text.
@@ -32,7 +33,7 @@ const theme = createTheme({
 });
 
 // top banner
-function TopBannerStyle({Logic}) {
+function TopBannerStyle() {
     return (
         <ThemeProvider theme={createTheme}>
             <CssBaseline/>
@@ -49,14 +50,55 @@ function TopBannerStyle({Logic}) {
                 }}
             >
                 <img src={logo} style={{height: '30vmin'}} alt=""/>
-                { Logic }
             </Box>
         </ThemeProvider>
     );
 }
 
-// home page
-
+// welcome page
+function WelcomeStyle(handleClick) {
+    return ( 
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <Box
+                sx={{
+                margin: 0,
+                marginTop: '50px',
+                width: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                fontSize: 'calc(20px + 2vmin)',
+                color: '#024033',
+                marginBottom: '30px',
+                alignItems: 'center',
+                textAlign: 'center',
+                fontWeight: 800,
+                }}
+            >
+                <Typewriter
+                    onInit={(typewriter) => {
+                        typewriter
+                            .typeString("Printing made easier")
+                            .start();
+                    }}
+                />
+                <Button 
+                    variant="outlined"
+                    sx={{
+                        fontSize: 'calc(20px + 2vmin)',
+                        width: '25%',
+                        borderRadius: '10px',
+                        marginTop: '30px',
+                    }}
+                    onClick={handleClick}
+                >
+                    Login
+                </Button>
+            </Box>
+        </ThemeProvider>
+     );
+}
 
 export { theme,
-TopBannerStyle }
+TopBannerStyle,
+WelcomeStyle }

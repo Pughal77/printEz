@@ -1,10 +1,11 @@
 import { WelcomeStyle } from '../style/style';
+import { useNavigate } from 'react-router-dom';
 
-function Welcome({setLogin}) {
-    const handleClick = (e) => {
-        e.preventDefault();
-        setLogin(true);
-    }
+function Welcome() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+      navigate("login");
+  }
   return WelcomeStyle(handleClick)
 }
 

@@ -22,16 +22,23 @@ import {
   VisibilityOff
 } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import theme from "./style"
+import { theme } from "./style";
 import { ThemeProvider } from '@mui/material/styles';
 
 export default function SignIn({ 
   setUsername,
   setPassword,
+  userType,
   setUsertype, 
   handleSubmit,
   invalid,
   setInvalid}) {
+
+    const [isShown, setIsSHown] = useState(false);
+    const togglePassword = () => {
+      setIsSHown((isShown) => !isShown);
+    };
+
     return (
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -73,7 +80,7 @@ export default function SignIn({
                                     <IconButton
                                     aria-label="toggle password visibility"
                                     onClick={togglePassword}
-                                    onMouseDown={handleMouseDownPassword}
+                                    onMouseDown={e => e.preventDefault()}
                                     edge="end"
                                     >
                                     {isShown ? <VisibilityOff /> : <Visibility />}
@@ -88,7 +95,7 @@ export default function SignIn({
                             <Select
                                 labelId="usertype-label"
                                 id="usertype-select"
-                                value={usertype}
+                                value={userType}
                                 label="Student or Staff *"
                                 onChange={(e) => setUsertype(e.target.value)}
                             >
