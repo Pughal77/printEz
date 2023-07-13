@@ -4,13 +4,13 @@ import SignIn from '../style/LoginFormLayout'
 function Login({ socket, quotas, setQuotas }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [userType, setUsertype] = useState('')
+    const [usertype, setUsertype] = useState('')
     const [invalid, setInvalid] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         socket.emit("loginAttempt", 
-        { username, password, userType } );
+        { username, password, usertype } );
     }
     useEffect(() => {
         socket.on("recievedCredentials", (data) => {
@@ -22,12 +22,12 @@ function Login({ socket, quotas, setQuotas }) {
         socket.on("invalidCredentials", () => {
             setInvalid(true);
         });
-    }, [socket, quotas, setQuotas])
+    }, [socket])
 
   return SignIn({
     setUsername,
     setPassword,
-    userType,
+    usertype,
     setUsertype,
     handleSubmit,
     invalid,

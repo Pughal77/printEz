@@ -17,9 +17,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />}/>
         <Route path="/login" element={<Login 
-        socket={socket}
-        quotas={quotas}
-        setQuotas={setQuotas}/>}/>
+          socket={socket}
+          quotas={quotas}
+          setQuotas={setQuotas}
+        />}/>
       </Routes>
     </div>
     

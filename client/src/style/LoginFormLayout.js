@@ -28,7 +28,7 @@ import { ThemeProvider } from '@mui/material/styles';
 export default function SignIn({ 
   setUsername,
   setPassword,
-  userType,
+  usertype,
   setUsertype, 
   handleSubmit,
   invalid,
@@ -95,7 +95,7 @@ export default function SignIn({
                             <Select
                                 labelId="usertype-label"
                                 id="usertype-select"
-                                value={userType}
+                                value={usertype}
                                 label="Student or Staff *"
                                 onChange={(e) => setUsertype(e.target.value)}
                             >
