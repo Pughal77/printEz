@@ -4,6 +4,8 @@ import { ThemeProvider } from '@emotion/react';
 import logo from '../assets/logo.svg';
 import Typewriter from "typewriter-effect";
 
+import TopBanner from '../components/TopBanner';
+
 // theme for the whole page
 const theme = createTheme({
     palette: {
@@ -35,67 +37,73 @@ const theme = createTheme({
 // top banner
 function TopBannerStyle() {
     return (
-        <ThemeProvider theme={createTheme}>
-            <CssBaseline/>
-            <Box
-                sx={{
-                margin: 0,
-                width: 1,
-                minHeight: '30vh',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                bgcolor: 'primary.main'
-                }}
-            >
-                <img src={logo} style={{height: '30vmin'}} alt=""/>
-            </Box>
-        </ThemeProvider>
+        <div>
+            <ThemeProvider theme={createTheme}>
+                <CssBaseline/>
+                <Box
+                    sx={{
+                    margin: 0,
+                    width: 1,
+                    minHeight: '15vh',
+                    maxHeight:  '20vh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    bgcolor: 'primary.main'
+                    }}
+                >
+                    <img src={logo} style={{height: '20vmin'}} alt=""/>
+                </Box>
+            </ThemeProvider>
+        </div>
     );
 }
 
 // welcome page
 function WelcomeStyle(handleClick) {
-    return ( 
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <Box
-                sx={{
-                margin: 0,
-                marginTop: '50px',
-                width: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                fontSize: 'calc(20px + 2vmin)',
-                color: '#024033',
-                marginBottom: '30px',
-                alignItems: 'center',
-                textAlign: 'center',
-                fontWeight: 800,
-                }}
-            >
-                <Typewriter
-                    onInit={(typewriter) => {
-                        typewriter
-                            .typeString("printing made easier")
-                            .start();
-                    }}
-                />
-                <Button 
-                    variant="outlined"
+    return (
+        <div>
+            <TopBanner /> 
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <Box
                     sx={{
-                        fontSize: 'calc(20px + 2vmin)',
-                        width: '25%',
-                        borderRadius: '10px',
-                        marginTop: '30px',
+                    margin: 0,
+                    marginTop: '50px',
+                    width: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    fontSize: 'calc(30px + 2vmin)',
+                    color: '#024033',
+                    marginBottom: '30px',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    fontWeight: 800,
                     }}
-                    onClick={handleClick}
                 >
-                    Login
-                </Button>
-            </Box>
-        </ThemeProvider>
+                    <Typewriter
+                        onInit={(typewriter) => {
+                            typewriter
+                                .typeString("Printing made easier")
+                                .start();
+                        }}
+                    />
+                    <Button 
+                        variant="outlined"
+                        sx={{
+                            fontSize: 'calc(20px + 2vmin)',
+                            width: '20%',
+                            borderRadius: '10px',
+                            marginTop: '30px',
+                        }}
+                        onClick={handleClick}
+                    >
+                        Login
+                    </Button>
+                </Box>
+            </ThemeProvider>
+            </div>
      );
 }
 

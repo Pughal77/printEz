@@ -99,7 +99,7 @@ export default function SignIn({
                                 label="Student or Staff *"
                                 onChange={(e) => setUsertype(e.target.value)}
                             >
-                                <MenuItem value={"student"}>student</MenuItem>
+                                <MenuItem value={"student"}>Student</MenuItem>
                                 <MenuItem value={"staff"}>Staff</MenuItem>
                             </Select>
                         </FormControl>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function Welcome() {
   const navigate = useNavigate();
   const handleClick = () => {
-      navigate("login");
+      navigate("/login");
   }
   return WelcomeStyle(handleClick)
 }

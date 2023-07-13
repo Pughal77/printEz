@@ -1,11 +1,14 @@
 import { useState, useEffect} from 'react'
 import SignIn from '../style/LoginFormLayout'
+import { useNavigate } from 'react-router-dom'
+import TopBanner from '../components/TopBanner'
 
 function Login({ socket, quotas, setQuotas }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('')
     const [invalid, setInvalid] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,21 +21,28 @@ function Login({ socket, quotas, setQuotas }) {
             setQuotas(data);
             setInvalid(false);
             console.log(quotas)
+            navigate("/user");
+
         });
         socket.on("invalidCredentials", () => {
             setInvalid(true);
         });
-    }, [socket])
+    }, [socket, setQuotas, quotas, navigate])
 
-  return SignIn({
-    setUsername,
-    setPassword,
-    usertype,
-    setUsertype,
-    handleSubmit,
-    invalid,
-    setInvalid
-    })
+  return (
+    <div>
+        <TopBanner />
+        < SignIn
+            setUsername = {setUsername}
+            setPassword = {setPassword}
+            usertype = {usertype}
+            setUsertype = {setUsertype}
+            handleSubmit = {handleSubmit}
+            invalid = {invalid}
+            setInvalid = {setInvalid}
+        />
+    </div>
+  )
 }
 
 export default Login
