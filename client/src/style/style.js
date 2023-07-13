@@ -78,7 +78,7 @@ function WelcomeStyle(handleClick) {
                 <Typewriter
                     onInit={(typewriter) => {
                         typewriter
-                            .typeString("Printing made easier")
+                            .typeString("printing made easier")
                             .start();
                     }}
                 />
