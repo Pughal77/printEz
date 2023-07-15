@@ -1,9 +1,13 @@
 import React from 'react'
-import Dashboard from '../components/dashboard'
-function User() {
+import DrawerLeft from '../components/drawer'
+function User({ quotas, user}) {
   return (
     <div>
-        <Dashboard />
+        <DrawerLeft 
+        quota={quotas.normalQuota}
+        colorQuota={quotas.colorQuota}
+        user={user}
+         />
     </div>
   )
 }

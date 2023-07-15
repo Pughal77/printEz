@@ -10,6 +10,7 @@ const socket = io.connect("http://localhost:3001");
 
 function App() {
   const [quotas, setQuotas] = useState({});
+  const [user, setUser] = useState({})
   return (
     <div className="App">
       <Routes>
@@ -18,8 +19,12 @@ function App() {
           socket={socket}
           quotas={quotas}
           setQuotas={setQuotas}
+          setUser={setUser}
         />}/>
-        <Route path="/user" element={<User />} />
+        <Route path="/user" element={<User
+          quotas={quotas}
+          user={user}
+        />} />
       </Routes>
     </div>
     

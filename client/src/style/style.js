@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { CssBaseline, Box, Button } from '@mui/material';
+import { CssBaseline, Box, Button, styled, Card } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import logo from '../assets/logo.svg';
 import Typewriter from "typewriter-effect";
@@ -11,13 +11,13 @@ const theme = createTheme({
     palette: {
         primary: {
         // light: will be calculated from palette.primary.main,
-        main: '#31d1d4',
+        main: '#DDD0C8',
         // dark: will be calculated from palette.primary.main,
         // contrastText: will be calculated to contrast with palette.primary.main
         },
         secondary: {
         // light: will be calculated from palette.primary.main,
-        main: '#8732d1',
+        main: '#90caf9',
         // dark: will be calculated from palette.secondary.main,
         contrastText: '#ffcc00',
         },
@@ -34,6 +34,7 @@ const theme = createTheme({
     },
 });
 
+const myCard = styled(Card) ({ minWidth: 240, backgroundColor: "#aaacaf", borderRadius:"20px"  })
 // top banner
 function TopBannerStyle() {
     return (
@@ -75,7 +76,6 @@ function WelcomeStyle(handleClick) {
                     display: 'flex',
                     flexDirection: 'column',
                     fontSize: 'calc(30px + 2vmin)',
-                    color: '#024033',
                     marginBottom: '30px',
                     alignItems: 'center',
                     textAlign: 'center',
@@ -90,7 +90,7 @@ function WelcomeStyle(handleClick) {
                         }}
                     />
                     <Button 
-                        variant="outlined"
+                        variant="contained"
                         sx={{
                             fontSize: 'calc(20px + 2vmin)',
                             width: '20%',
@@ -108,5 +108,6 @@ function WelcomeStyle(handleClick) {
 }
 
 export { theme,
-TopBannerStyle,
-WelcomeStyle }
+    myCard,
+    TopBannerStyle,
+    WelcomeStyle }

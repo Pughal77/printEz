@@ -3,7 +3,7 @@ import SignIn from '../style/LoginFormLayout'
 import { useNavigate } from 'react-router-dom'
 import TopBanner from '../components/TopBanner'
 
-function Login({ socket, quotas, setQuotas }) {
+function Login({ socket, quotas, setQuotas, setUser }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('')
@@ -20,14 +20,15 @@ function Login({ socket, quotas, setQuotas }) {
             console.log(`CREDENTIALS SUCCESSFULLY RECIEVED`);
             setQuotas(data);
             setInvalid(false);
-            console.log(quotas)
+            setUser(username);
+            console.log(quotas);
             navigate("/user");
 
         });
         socket.on("invalidCredentials", () => {
             setInvalid(true);
         });
-    }, [socket, setQuotas, quotas, navigate])
+    }, [socket, setQuotas, quotas, navigate, setUser, username])
 
   return (
     <div>
