@@ -67,11 +67,12 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		}).start();
 	}
 
-	printFile(credentials){
-		const sshObject = this.login(credentials)
+	printFile(credentials, printer){
+		console.log(`\nTHE PRINTER CHOSEN IS: ${printer}`);
+		const sshObject = this.login(credentials);
 		sshObject
-		.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {})
-		.exec(`lpq -P psc008`, {
+		.exec(`lpr -P ${printer} printez/${credentials.username}.pdf`, {})
+		.exec(`lpq -P ${printer}`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
 				this.emit("readJobQRes", stdout)
