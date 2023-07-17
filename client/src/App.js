@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import User from './pages/User';
 import { Routes, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // initialize socket.io
 import { io } from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
 function App() {
-  const [quotas, setQuotas] = useState({});
-  const [user, setUser] = useState({})
+  const [quotas, setQuotas] = useState({normalQuota: "", colorQuota: ""});
+  const [user, setUser] = useState("")
+  const navigate = useNavigate();
+  useEffect(() => {
+    socket.on("newConnection", () => {
+      console.log("new connection established")
+      navigate("/");
+    });
+  }, [socket])
   return (
     <div className="App">
       <Routes>

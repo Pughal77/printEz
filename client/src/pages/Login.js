@@ -14,21 +14,20 @@ function Login({ socket, quotas, setQuotas, setUser }) {
         e.preventDefault();
         socket.emit("loginAttempt", 
         { username, password, usertype } );
+        setUser(username);
     }
     useEffect(() => {
         socket.on("recievedCredentials", (data) => {
             console.log(`CREDENTIALS SUCCESSFULLY RECIEVED`);
             setQuotas(data);
             setInvalid(false);
-            setUser(username);
-            console.log(quotas);
             navigate("/user");
-
         });
+        
         socket.on("invalidCredentials", () => {
             setInvalid(true);
         });
-    }, [socket, setQuotas, quotas, navigate, setUser, username])
+    }, [socket])
 
   return (
     <div>

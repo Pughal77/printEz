@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
     let fileUploaded = false;
 
     console.log(`Client Connected: ${socket.id}`);
-
+    socket.emit("newConnection");
     // receiving credentials 
     socket.on("loginAttempt", (credentials) => {
         // flag to indicate if event was already emitted

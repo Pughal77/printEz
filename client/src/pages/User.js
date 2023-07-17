@@ -1,13 +1,12 @@
-import React from 'react'
 import DrawerLeft from '../components/drawer'
-function User({ quotas, user}) {
+function User({ quotas, user }) {
   return (
     <div>
         <DrawerLeft 
-        quota={quotas.normalQuota}
-        colorQuota={quotas.colorQuota}
-        user={user}
-         />
+          quota={quotas.normalQuota}
+          colorQuota={quotas.colorQuota}
+          user={user}
+        />
     </div>
   )
 }
