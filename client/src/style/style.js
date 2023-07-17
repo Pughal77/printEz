@@ -11,7 +11,7 @@ const theme = createTheme({
     palette: {
         primary: {
         // light: will be calculated from palette.primary.main,
-        main: '#DDD0C8',
+        main: '#14409F',
         // dark: will be calculated from palette.primary.main,
         // contrastText: will be calculated to contrast with palette.primary.main
         },
@@ -85,7 +85,7 @@ function WelcomeStyle(handleClick) {
                     <Typewriter
                         onInit={(typewriter) => {
                             typewriter
-                                .typeString("Printing made easier")
+                                .typeString("PRINTING MADE EASIER")
                                 .start();
                         }}
                     />
@@ -96,6 +96,7 @@ function WelcomeStyle(handleClick) {
                             width: '20%',
                             borderRadius: '10px',
                             marginTop: '30px',
+                            backgroundcolor: 'primary.main'
                         }}
                         onClick={handleClick}
                     >
