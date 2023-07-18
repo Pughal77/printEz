@@ -1,13 +1,22 @@
 import DrawerLeft from '../components/drawer'
+import { Box } from '@mui/material'
+import DataGridDemo from '../components/dataGrid'
+
 function User({ quotas, user }) {
   return (
-    <div>
+    <Box 
+    sx={{
+      display:"flex",
+      gap:'20px'
+    }}>
         <DrawerLeft 
           quota={quotas.normalQuota}
           colorQuota={quotas.colorQuota}
           user={user}
         />
-    </div>
+        <DataGridDemo />
+        <DataGridDemo />
+    </Box>
   )
 }
 
