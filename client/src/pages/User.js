@@ -1,8 +1,8 @@
 import DrawerLeft from '../components/drawer'
 import { Box } from '@mui/material'
-import DataGridDemo from '../components/dataGrid'
+import PrinterQueue from '../components/printerQueue'
 
-function User({ quotas, user }) {
+function User({ socket, quotas, user }) {
   return (
     <Box 
     sx={{
@@ -14,8 +14,9 @@ function User({ quotas, user }) {
           colorQuota={quotas.colorQuota}
           user={user}
         />
-        <DataGridDemo />
-        <DataGridDemo />
+        <PrinterQueue 
+        socket = {socket}
+        />
     </Box>
   )
 }

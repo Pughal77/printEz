@@ -1,51 +1,14 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 150
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 150,
-    // see how to render a delete button here!
-    // renderCell: (params) => {return (<Button>lol</Button>)}
-  }
-];
+// how to use dataGrid
+// define coloums(headers) and rows
+// coloumns need to be passed as an array of objects with certain properties u can see what they are
+// in this link https://mui.com/x/react-data-grid/
+// for rows they should be objects with the same number of properties as the number of ur headers in the table
+// impt can use rendercell(when defining coloumns) to render jsx expressions that is show in every cell of ur table
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-
-export default function DataGridDemo() {
+export default function myDataGrid({ rows, columns }) {
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid

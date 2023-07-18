@@ -89,11 +89,15 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 
 	jobQ(credentials){
 		const sshObject = this.login(credentials)
+		// for testing
+		const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
 		sshObject
 		.exec(`lpq -P psc008`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
-				this.emit("readJobQRes", stdout)
+				// this.emit("readJobQRes", stdout)
+				// for testing
+				this.emit("readJobQRes", testData)
 			}
 		})
 		.start();
