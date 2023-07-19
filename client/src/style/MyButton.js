@@ -5,19 +5,24 @@ import { CssBaseline } from '@mui/material';
 
 import { theme } from './style';
 
-export default function MyButton({ sx, text, handleClick }) {
+export default function MyButton({ addStyle, text, handleClick }) {
+
+    const includedStyle = {
+        margin: '1vmin',
+        borderRadius: '10px',
+        backgroundColor: '#ffffff',
+        color: 'primary.main',
+        fontSize: 16,
+        fontWeight: 'bold'
+    }
 
     return (
         <ThemeProvider theme={theme}>
             <Button variant='contained' size='small'
-            sx={{
-                margin: '1vmin',
-                borderRadius: '15px',
-                backgroundColor: '#ffffff',
-                color: 'primary.main',
-                fontSize: 16,
-                fontWeight: 'bold'
-            }}
+            sx={
+                {...includedStyle,
+                ...addStyle}
+            }
             onClick={handleClick}
             >
                 { text }

@@ -1,7 +1,6 @@
 import DrawerLeft from '../components/drawer'
 import { Box } from '@mui/material'
 import PrinterQueue from '../components/printerQueue'
-//import DataGridDemo from '../components/dataGrid'
 import { ThemeProvider } from '@emotion/react';
 
 import { theme } from '../style/style';

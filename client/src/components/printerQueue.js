@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import MyDataGrid from './dataGrid'
 import read from '../utils/readJobs'
-import { Box,Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
+import MyButton from '../style/MyButton'
 
 function PrinterQueue({ socket }) {
     const columns = [
@@ -61,17 +62,14 @@ function PrinterQueue({ socket }) {
   return (
     <Box
       sx={{
-        backgroundColor: "primary.main",
-        padding: "20px"
+        backgroundColor: "primary.main"
       }}
     >
-      <Button 
-        sx={{
-          backgroundColor: "#ffffff",
-          mb: "10px"
-        }}
-      onClick={ handleClick }
-      >Refresh Queue</Button>
+      <MyButton
+            addStyle={{mb: "10px"}}
+            text="Refresh Queue"
+            onClick={handleClick}
+      />
       <MyDataGrid 
         rows = { rows }
         columns= { columns }
