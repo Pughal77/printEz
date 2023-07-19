@@ -4,6 +4,7 @@ import MyDataGrid from './dataGrid'
 import MyButton from '../style/MyButton'
 
 function FileManager({ socket }) {
+    // doesnt work yet
     const [selectedFile, setSelectedFile] = useState();
     const [isPDF, setIsPDF] = useState(false);
     const [pdfWarning, setPDFWarning] = useState(false);
