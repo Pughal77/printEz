@@ -7,11 +7,11 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from '../style/style';
 
 const columns = [
-  { field: 'id', headerName: 'No.', width: 90 },
+  { field: 'id', headerName: 'No.', width: 100 },
   {
     field: 'fileName',
     headerName: 'File name',
-    width: 300,
+    width: 500,
     editable: true,
   }
 ];
@@ -24,7 +24,7 @@ const rows = [
 export default function DataGridDemo() {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ height: 400, width: '100%'}}>
+      <Box sx={{ height: 400}}>
         <DataGrid
           sx={{backgroundColor: "#FFFFFF"}}
           rows={rows}
