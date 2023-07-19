@@ -1,12 +1,13 @@
 import DrawerLeft from '../components/drawer'
 import { Box } from '@mui/material'
-import DataGridDemo from '../components/dataGrid'
+import PrinterQueue from '../components/printerQueue'
+//import DataGridDemo from '../components/dataGrid'
 import { ThemeProvider } from '@emotion/react';
 import UploadButton from '../components/uploadButton';
 
 import { theme } from '../style/style';
 
-function User({ quotas, user }) {
+function User({ socket, quotas, user }) {
   return (
     <ThemeProvider theme={theme}>
       <Box 
@@ -44,12 +45,13 @@ function User({ quotas, user }) {
             }}
           >
             <DataGridDemo />
-            <DataGridDemo />
+            <PrinterQueue 
+            socket = {socket}
+            />
           </Box>
         </Box>
       </Box>
     </ThemeProvider>
-    
   )
 }
 
