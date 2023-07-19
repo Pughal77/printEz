@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import MyDataGrid from './dataGrid'
-import { Button } from '@mui/base'
 import read from '../utils/readJobs'
+import { Box,Button } from '@mui/material'
 
 function PrinterQueue({ socket }) {
     const columns = [
@@ -59,13 +59,24 @@ function PrinterQueue({ socket }) {
       socket.emit("readJobQReq")
     }
   return (
-    <div>
-      <Button onClick={ handleClick }>Refresh Queue</Button>
+    <Box
+      sx={{
+        backgroundColor: "primary.main",
+        padding: "20px"
+      }}
+    >
+      <Button 
+        sx={{
+          backgroundColor: "#ffffff",
+          mb: "10px"
+        }}
+      onClick={ handleClick }
+      >Refresh Queue</Button>
       <MyDataGrid 
         rows = { rows }
         columns= { columns }
       />
-    </div>
+    </Box>
   )
 }
 
