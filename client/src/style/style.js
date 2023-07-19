@@ -39,7 +39,7 @@ const myCard = styled(Card) ({ minWidth: 240, backgroundColor: "#aaacaf", border
 function TopBannerStyle() {
     return (
         <div>
-            <ThemeProvider theme={createTheme}>
+            <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <Box
                     sx={{

@@ -24,8 +24,9 @@ const rows = [
 export default function DataGridDemo() {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ height: 400, width: '100%', backgroundColor: 'primary.main' }}>
+      <Box sx={{ height: 400, width: '100%'}}>
         <DataGrid
+          sx={{backgroundColor: "#FFFFFF"}}
           rows={rows}
           columns={columns}
           initialState={{
