@@ -52,7 +52,6 @@ export default function read (stdout, setJobList) {
             }
         }
         // result here doesnt match the fields for coloumns in data grid
-        console.log(result)
         setJobList(result)
     }
 }

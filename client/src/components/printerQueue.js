@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import myDataGrid from './dataGrid'
+import MyDataGrid from './dataGrid'
 import { Button } from '@mui/base'
 import read from '../utils/readJobs'
 
 function PrinterQueue({ socket }) {
     const columns = [
       {
-        field: 'Rank',
+        field: 'rank',
         headerName: 'Rank',
         width: 150
       },
@@ -21,22 +21,26 @@ function PrinterQueue({ socket }) {
         width: 150
       },
       {
-        field: 'File',
+        field: 'file',
         headerName: 'File',
         width: 150
       },
       {
-        field: 'Size',
+        field: 'size',
         headerName: 'Size',
         width: 150
       },
       {
         field: 'Delete',
-        headerName: 'Delete',
+        headerName: 'Delete Job',
         width: 150,
         renderCell:(params) => {
-          console.log(params.value)
-          return params.value
+          // use params.row to access properties of values in that cell
+          const handleDelete = (id) => {
+            socket.emit("delReq", id)
+            socket.emit("readJobQReq")
+          }
+          return <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
         }
       }
     ]
@@ -57,7 +61,7 @@ function PrinterQueue({ socket }) {
   return (
     <div>
       <Button onClick={ handleClick }>Refresh Queue</Button>
-      <myDataGrid 
+      <MyDataGrid 
         rows = { rows }
         columns= { columns }
       />

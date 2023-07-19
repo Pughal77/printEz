@@ -8,7 +8,7 @@ import { DataGrid } from '@mui/x-data-grid';
 // for rows they should be objects with the same number of properties as the number of ur headers in the table
 // impt can use rendercell(when defining coloumns) to render jsx expressions that is show in every cell of ur table
 
-export default function myDataGrid({ rows, columns }) {
+export default function MyDataGrid({ rows, columns }) {
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
