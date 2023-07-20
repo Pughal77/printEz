@@ -111,7 +111,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		.start();
 	}
 	
-	toUnix(credentials, pdfFileName){
+	toUnix(credentials, pdfFileName, deleteFile){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
 		const conn = new Client();
 
@@ -152,7 +152,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 						writeStream.on('close',
 							function () {
 								console.log("- file transferred");
-								this.emit("fileInUnix", pdfFileName)
+								deleteFile()
 								sftp.end();
 							}
 						);

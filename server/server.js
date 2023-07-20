@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
 
     console.log(`Client Connected: ${socket.id}`);
     socket.emit("newConnection");
-    // receiving credentials 
+    // receiving credentials
     socket.on("loginAttempt", (credentials) => {
         // flag to indicate if event was already emitted
         let waiting = true;
@@ -62,10 +62,10 @@ io.on("connection", (socket) => {
                 waiting = false;
             }
         });
-        
+
         // attempt to log in with current credentials
         console.log(`attempting to log-in for ${credentials.username}`);
-        sshLogin.loginAttempt(credentials); 
+        sshLogin.loginAttempt(credentials);
     });
 
     // receiving pdf file
@@ -81,19 +81,17 @@ io.on("connection", (socket) => {
                 } else {
                     // set flag to true
                     fileUploaded = true;
-                    sshLogin.toUnix(user_credentials, fileName);
-                    console.log("file written to print_files directory");    
-                    callback({ message: "success" });
-                    sshLogin.on("fileInUnix", (pdfFileName) => {
-                        fs.unlink(`print_files/${pdfFileName}`, (err) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                        })
+                    const deleteFile = (fileName) => () => fs.unlink(`print_files/${fileName}`, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
                     })
+                    sshLogin.toUnix(user_credentials, fileName, deleteFile(fileName));
+                    console.log("file written to print_files directory");
+                    callback({ message: "success" });
                 }
             });
-                    
+
         } else {
             socket.emit("missingCredentials");
         }
