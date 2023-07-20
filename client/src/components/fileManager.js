@@ -10,22 +10,63 @@ import UploadFile from './uploadFile'
 function FileManager({ socket }) {
     const [pdfWarning, setPDFWarning] = useState(false);
     
+    const handlePrint = ({ fileName }) => {
+        socket.emit("printAttempt", fileName)
+    }
+
+    const handleDelete = (fileName) => {
+        socket.emit("deleteFile", fileName)
+        socket.emit("readFilesReq")
+    }
+
+    useEffect(() => {
+        socket.emit("readFilesReq")
+        socket.on("readFilesRes", (data) => {
+            if (data !== "ls: cannot access 'printez': No such file or directory") {
+                let count = 0
+                const fileNames = data.split("\n").map(
+                    (fileName) => {
+                        count++
+                        return {
+                            id: count,
+                            file: fileName
+                        }
+                    }
+                )
+                fileNames.pop()
+                setRows(fileNames)
+                
+            }
+        })
+      }, [socket])
 
     const columns = [
         {
             field: 'file',
             headerName: 'File',
-            width: 150
+            width: 300
         },
         {
             field: 'printButton',
             headerName: 'Print',
             width: 150,
             renderCell: (params) => {
-                return <Button>Print</Button>
+                const fileName = params.row.file
+                return <Button onClick={() => handlePrint({fileName})}>Print</Button>
+            }
+        },
+        {
+            field: 'deleteButton',
+            headerName: 'Delete',
+            width: 150,
+            renderCell: (params) => {
+                const fileName = params.row.file
+                return <Button onClick={() => handleDelete(fileName)}>Delete</Button>
             }
         }
     ]
+
+    const [rows,setRows] = useState([])
 
   return (
     <Box
@@ -37,7 +78,11 @@ function FileManager({ socket }) {
         }}
     >
         <UploadFile socket={socket} setPDFWarning={setPDFWarning}/>
-        {pdfWarning && 
+        <MyDataGrid 
+            rows={rows}
+            columns={columns}/>
+        {
+        pdfWarning && 
                 <Alert 
                     severity="error"
                     onClose={() => {setPDFWarning(false)}}

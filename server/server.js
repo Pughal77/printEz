@@ -97,9 +97,9 @@ io.on("connection", (socket) => {
         }
     });
 
-    socket.on("printAttempt", () => {
+    socket.on("printAttempt", (fileName) => {
         if (user_credentials) {
-            sshLogin.printFile(user_credentials)
+            sshLogin.printFile(user_credentials, fileName)
             sshLogin.on("readJobQRes", (data) => {
                 socket.emit("readJobQRes", data)
             })
@@ -122,6 +122,25 @@ io.on("connection", (socket) => {
     socket.on("delReq", (id) => {
         if (user_credentials) {
             sshLogin.deleteJob(user_credentials, id)
+        } else {
+            socket.emit("missingCredentials");
+        }
+    })
+
+    socket.on("readFilesReq", () => {
+        if (user_credentials) {
+            sshLogin.readFiles(user_credentials)
+            sshLogin.on("readFilesRes", (data) => {
+                socket.emit("readFilesRes", data)
+            })
+        } else {
+            socket.emit("missingCredentials");
+        }
+    })
+
+    socket.on("deleteFile", (fileName)=> {
+        if (user_credentials) {
+            sshLogin.deleteFile(user_credentials, fileName)
         } else {
             socket.emit("missingCredentials");
         }

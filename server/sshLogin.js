@@ -67,10 +67,10 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		}).start();
 	}
 
-	printFile(credentials){
+	printFile(credentials, fileName){
 		const sshObject = this.login(credentials)
 		sshObject
-		.exec(`lpr -P psc008 printez/${credentials.username}.pdf`, {})
+		.exec(`lpr -P psc008 printez/${fileName}`, {})
 		.exec(`lpq -P psc008`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
@@ -90,14 +90,14 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	jobQ(credentials){
 		const sshObject = this.login(credentials)
 		// for testing
-		 const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
+		// const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
 		sshObject
 		.exec(`lpq -P psc008`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
-				// this.emit("readJobQRes", stdout)
+				this.emit("readJobQRes", stdout)
 				// for testing
-				this.emit("readJobQRes", testData)
+				// this.emit("readJobQRes", testData)
 			}
 		})
 		.start();
@@ -108,6 +108,28 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		console.log(`Deleting job ${id}`)
 		sshObject
 		.exec(`lprm -P psc008 ${id}`, {})
+		.start();
+	}
+
+	readFiles(credentials) {
+		const sshObject = this.login(credentials)
+		console.log(`Reading printez dir`)
+		sshObject
+		.exec(`ls printez`, {
+			out: (stdout) => {
+				console.log(`${stdout}`);
+				this.emit("readFilesRes", stdout)
+			}
+		})
+		.start();
+	}
+
+	deleteFile(credentials, fileName) {
+		const sshObject = this.login(credentials)
+		console.log(`Deleting ${fileName}`)
+		sshObject
+		.exec(`rm printez/${fileName}`, {
+		})
 		.start();
 	}
 	

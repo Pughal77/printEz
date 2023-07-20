@@ -18,7 +18,7 @@ function App() {
       console.log("new connection established")
       navigate("/");
     });
-  }, [socket])
+  }, [navigate])
   return (
     <div className="App">
       <Routes>
