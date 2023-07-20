@@ -81,12 +81,12 @@ io.on("connection", (socket) => {
                 } else {
                     // set flag to true
                     fileUploaded = true;
-                    const deleteFile = (fileName) => () => fs.unlink(`print_files/${fileName}`, (err) => {
+                    const deleteFile = () => fs.unlink(`print_files/${fileName}`, (err) => {
                         if (err) {
                             console.log(err);
                         }
                     })
-                    sshLogin.toUnix(user_credentials, fileName, deleteFile(fileName));
+                    sshLogin.toUnix(user_credentials, fileName, deleteFile);
                     console.log("file written to print_files directory");
                     callback({ message: "success" });
                 }
