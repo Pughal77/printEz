@@ -26,7 +26,7 @@ export default function UploadFile({socket, setPDFWarning}){
     useEffect(() => {
         if (isPDF) {
             // console.log(selectedFile);
-            const fileName = selectedFile.name
+            const fileName = selectedFile.name.split(' ').join('_')
             console.log(fileName)
             socket.emit("pdfTransfer", { selectedFile, fileName }, (status) => {
                 // console.log(status);
