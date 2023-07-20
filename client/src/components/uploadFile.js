@@ -16,6 +16,7 @@ export default function UploadFile({socket, setPDFWarning}){
             if (file.type === "application/pdf") {
                 setIsPDF(true);
                 setSelectedFile(file);
+                setPDFWarning(false);
             } else {
                 setPDFWarning(true);
             }

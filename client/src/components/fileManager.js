@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 import { Box, Button, Input } from '@mui/material'
 import { Alert, AlertTitle } from "@mui/material";
@@ -27,7 +27,6 @@ function FileManager({ socket }) {
         }
     ]
 
-   
   return (
     <Box
         sx={{

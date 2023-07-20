@@ -84,7 +84,6 @@ io.on("connection", (socket) => {
                     sshLogin.toUnix(user_credentials, fileName);
                     console.log("file written to print_files directory");    
                     callback({ message: "success" });
-                    socket.emit("fileUploaded");
                     sshLogin.on("fileInUnix", (pdfFileName) => {
                         fs.unlink(`print_files/${pdfFileName}`, (err) => {
                             if (err) {
