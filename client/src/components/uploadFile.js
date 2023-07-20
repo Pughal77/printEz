@@ -24,10 +24,11 @@ export default function UploadFile({socket, setPDFWarning}){
 
     useEffect(() => {
         if (isPDF) {
-            console.log(selectedFile);
-        
-            socket.emit("pdfTransfer", selectedFile, (status) => {
-                console.log(status);
+            // console.log(selectedFile);
+            const fileName = selectedFile.name
+            console.log(fileName)
+            socket.emit("pdfTransfer", { selectedFile, fileName }, (status) => {
+                // console.log(status);
             });
         }
     }, [selectedFile])

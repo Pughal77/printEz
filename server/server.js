@@ -69,24 +69,32 @@ io.on("connection", (socket) => {
     });
 
     // receiving pdf file
-    socket.on("pdfTransfer", (pdfFile, callback) => {
-        console.log(pdfFile)
+    socket.on("pdfTransfer", ({ selectedFile, fileName }, callback) => {
+        console.log(fileName)
         // save the content to the disk if credentials are entered
         if (user_credentials) {
             // write file into node_module folder with same name as username
-            fs.writeFile(`print_files/${user_credentials.username}.pdf`, pdfFile, (err) => {
+            fs.writeFile(`print_files/${fileName}`, selectedFile, (err) => {
                 if (err) {
                     console.log(err);
                     callback({ message: "failure" });
                 } else {
                     // set flag to true
                     fileUploaded = true;
-                    sshLogin.toUnix(user_credentials);
+                    sshLogin.toUnix(user_credentials, fileName);
                     console.log("file written to print_files directory");    
                     callback({ message: "success" });
                     socket.emit("fileUploaded");
+                    sshLogin.on("fileInUnix", (pdfFileName) => {
+                        fs.unlink('print_files/${pdfFileName}', (err) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        })
+                    })
                 }
             });
+                    
         } else {
             socket.emit("missingCredentials");
         }
@@ -123,15 +131,6 @@ io.on("connection", (socket) => {
     })
 
     socket.on("disconnect", () => {
-        // if file has been uploaded, delete file
-        if (fileUploaded) {
-            fs.unlink(`print_files/${user_credentials.username}.pdf`, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(`print_files/${user_credentials.username}.pdf was deleted`);
-            });
-        }
         console.log(`Client Disonnected: ${socket.id}`)
     });
 });

@@ -41,7 +41,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		// set timeout for login (unsuccessful if unable to log in within the )
 		const timeoutObj = this.createTimeout(
 			"INVALID CREDENTIALS \n",
-			1500,
+			2500,
 			"unsuccessfulLogin"
 		)
 		
@@ -111,7 +111,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		.start();
 	}
 	
-	toUnix(credentials){
+	toUnix(credentials, pdfFileName){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
 		const conn = new Client();
 
@@ -145,13 +145,14 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 						});
 		 
 						// upload file
-						var readStream = fs.createReadStream(`print_files/${credentials.username}.pdf`);
-						var writeStream = sftp.createWriteStream(`printez/${credentials.username}.pdf`);
+						var readStream = fs.createReadStream(`print_files/${pdfFileName}`);
+						var writeStream = sftp.createWriteStream(`printez/${pdfFileName}`);
 		 
 						// upload completed
 						writeStream.on('close',
 							function () {
 								console.log("- file transferred");
+								this.emit("fileInUnix", pdfFileName)
 								sftp.end();
 							}
 						);
