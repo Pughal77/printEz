@@ -86,7 +86,7 @@ io.on("connection", (socket) => {
                     callback({ message: "success" });
                     socket.emit("fileUploaded");
                     sshLogin.on("fileInUnix", (pdfFileName) => {
-                        fs.unlink('print_files/${pdfFileName}', (err) => {
+                        fs.unlink(`print_files/${pdfFileName}`, (err) => {
                             if (err) {
                                 console.log(err);
                             }
