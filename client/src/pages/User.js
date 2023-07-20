@@ -23,10 +23,10 @@ function User({ socket, quotas, user }) {
           colorQuota={quotas.colorQuota}
           user={user}
         />
-        <PrinterQueue 
+        <FileManager
           socket = {socket}
         />
-        <FileManager
+        <PrinterQueue 
           socket = {socket}
         />
       </Box>

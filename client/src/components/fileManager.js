@@ -1,13 +1,15 @@
 import {useState} from 'react'
+
 import { Box, Button, Input } from '@mui/material'
+import { Alert, AlertTitle } from "@mui/material";
 import MyDataGrid from './dataGrid'
 import MyButton from '../style/MyButton'
+import UploadFile from './uploadFile'
+
 
 function FileManager({ socket }) {
-    // doesnt work yet
-    const [selectedFile, setSelectedFile] = useState();
-    const [isPDF, setIsPDF] = useState(false);
     const [pdfWarning, setPDFWarning] = useState(false);
+    
 
     const columns = [
         {
@@ -25,51 +27,26 @@ function FileManager({ socket }) {
         }
     ]
 
-    const handleFileChange = (e) => {
-        if (e.target.files[0] != null) {
-            const currFile = e.target.files[0];
-            if (currFile.type === "application/pdf") {
-                setIsPDF(true);
-                setSelectedFile(currFile);
-            }
-        }
-    }
-
-    const handleUpload = async(e) => {
-        e.preventDefault();
-        if (isPDF) {
-            console.log(selectedFile);
-        
-            socket.emit("pdfTransfer", selectedFile, (status) => {
-                console.log(status);
-            });
-        } else {
-            setPDFWarning(true);
-        }
-    }
+   
   return (
     <Box
         sx={{
         display:"flex",
         backgroundColor: "primary.main",
-        flexDirection: 'column'
+        flexDirection: 'column',
+        minWidth: '40%'
         }}
     >
-
-        <Input 
-            type="file"
-            onChange={() => {}}
-            accept="pdf/*"
-            sx={{
-                borderRadius: '5px',
-                color: '#ffffff',
-                display: 'block',
-                fontSize: 'calc(1px + 2vmin)',
-                mb: '10px'
-            }}
-        />
-        {/* <MyDataGrid 
-        /> */}
+        <UploadFile socket={socket} setPDFWarning={setPDFWarning}/>
+        {pdfWarning && 
+                <Alert 
+                    severity="error"
+                    onClose={() => {setPDFWarning(false)}}
+                >
+                    <AlertTitle>ERROR</AlertTitle>
+                    <strong>please upload a PDF file</strong>
+                </Alert>
+            }
     </Box>
   )
 }

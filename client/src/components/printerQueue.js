@@ -8,18 +8,18 @@ function PrinterQueue({ socket }) {
     const columns = [
       {
         field: 'rank',
-        headerName: 'Rank',
-        width: 150
+        headerName: 'Status',
+        width: 100
       },
       {
         field: 'owner',
         headerName: 'Owner',
-        width: 150
+        width: 100
       },
       {
         field: 'id',
         headerName: 'Job Id',
-        width: 150
+        width: 75
       },
       {
         field: 'file',
@@ -29,12 +29,12 @@ function PrinterQueue({ socket }) {
       {
         field: 'size',
         headerName: 'Size',
-        width: 150
+        width: 100
       },
       {
         field: 'Delete',
         headerName: 'Delete Job',
-        width: 150,
+        width: 100,
         renderCell:(params) => {
           // use params.row to access properties of values in that cell
           const handleDelete = (id) => {
@@ -62,7 +62,8 @@ function PrinterQueue({ socket }) {
   return (
     <Box
       sx={{
-        backgroundColor: "primary.main"
+        backgroundColor: "primary.main",
+        minWidth: "40%"
       }}
     >
       <MyButton
