@@ -88,7 +88,7 @@ io.on("connection", (socket) => {
                     })
                     sshLogin.toUnix(user_credentials, fileName, deleteFile);
                     console.log("file written to print_files directory");
-                    callback({ message: "success" });
+                    // callback({ message: "success" });
                 }
             });
 

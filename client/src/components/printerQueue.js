@@ -72,8 +72,11 @@ function PrinterQueue({ socket }) {
             onClick={handleClick}
       />
       <MyDataGrid 
-        rows = { rows }
-        columns= { columns }
+        rows = {rows}
+        columns= {columns}
+        getRowId= {(row) => {
+          return row.id
+        }}
       />
     </Box>
   )

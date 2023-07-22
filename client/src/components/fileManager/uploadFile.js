@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 
 import { ThemeProvider } from "@emotion/react";
 
-import { theme } from "../style/style";
+import { theme } from "../../style/style";
 import UploadButton from "./uploadButton";
 
-export default function UploadFile({socket, setPDFWarning}){
+export default function UploadFile({socket, setPDFWarning, readFiles}){
     const [selectedFile, setSelectedFile] = useState();
     const [isPDF, setIsPDF] = useState(false);
    
@@ -25,14 +25,14 @@ export default function UploadFile({socket, setPDFWarning}){
 
     useEffect(() => {
         if (isPDF) {
-            // console.log(selectedFile);
             const fileName = selectedFile.name.split(' ').join('_')
             console.log(fileName)
-            socket.emit("pdfTransfer", { selectedFile, fileName }, (status) => {
-                // console.log(status);
-            });
+            socket
+            .emit("pdfTransfer", { selectedFile, fileName })
+            
         }
-    }, [selectedFile])
+        socket.emit("readFilesReq")
+    }, [socket, selectedFile, isPDF])
     
 
     return (

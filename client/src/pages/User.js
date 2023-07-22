@@ -4,7 +4,7 @@ import PrinterQueue from '../components/printerQueue'
 import { ThemeProvider } from '@emotion/react';
 
 import { theme } from '../style/style';
-import FileManager from '../components/fileManager';
+import FileManager from '../components/fileManager/fileManager';
 
 import { useState } from 'react';
 

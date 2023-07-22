@@ -12,7 +12,7 @@ import { theme } from '../style/style';
 // for rows they should be objects with the same name of properties as the fields sdefined in coloumns
 // impt can use rendercell(when defining coloumns) to render jsx expressions that is show in every cell of ur table
 
-export default function MyDataGrid({ rows, columns }) {
+export default function MyDataGrid({ rows, columns, getRowId }) {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ 
@@ -31,6 +31,7 @@ export default function MyDataGrid({ rows, columns }) {
           }}
           pageSizeOptions={[5]}
           isRowSelectable = {() => false}
+          getRowId={getRowId}
         />
       </Box>
     </ThemeProvider>

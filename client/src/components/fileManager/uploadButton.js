@@ -5,8 +5,8 @@ import UploadFile from "./uploadFile";
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 
-import MyButton from "../style/MyButton";
-import { theme } from '../style/style';
+import MyButton from "../../style/MyButton";
+import { theme } from '../../style/style';
 
 export default function UploadButton({handleFileChange}) {
     const hiddenFileInput = useRef(null);

@@ -128,8 +128,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		const sshObject = this.login(credentials)
 		console.log(`Deleting ${fileName}`)
 		sshObject
-		.exec(`rm printez/${fileName}`, {
-		})
+		.exec(`rm -f printez/${fileName}`, {})
 		.start();
 	}
 	
