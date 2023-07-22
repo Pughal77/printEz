@@ -48,14 +48,16 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		const sshObject = this.login(credentials)
 		// prints hostname
 		sshObject
-		.exec("pusage", {
+		.exec(/*"pusage"*/"ls", {
 			out: (stdout) => {
 
 				// obtain the relevant quotas from stdout
-				const text = stdout.toString();
-				const editedText = text.substring(text.indexOf("Available") + 17);
-				const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
-				const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
+				// const text = stdout.toString();
+				// const editedText = text.substring(text.indexOf("Available") + 17);
+				// const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
+				// const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
+				const normalQuota = "";
+				const colorQuota = "";
 
 				console.log(`VALID CREDENTIALS\n`);
 				console.log(`NORMAL QUOTA: ${normalQuota}`);
@@ -112,21 +114,34 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	}
 
 	readFiles(credentials) {
+		const timeoutObj = setTimeout(() => {
+			console.log(`file is empty`);
+			this.emit("readFilesRes", "")
+			return;
+		  }, 1000);
+
 		const sshObject = this.login(credentials)
-		console.log(`Reading printez dir`)
+		console.log(`\nREADING PRINTEZ DIR`)
 		sshObject
 		.exec(`ls printez`, {
 			out: (stdout) => {
 				console.log(`${stdout}`);
 				this.emit("readFilesRes", stdout)
+				clearTimeout(timeoutObj);
 			}
 		})
 		.start();
 	}
 
-	deleteFile(credentials, fileName) {
+	deleteFile(credentials, fileName, readFiles) {
+		const timeoutObj =  setTimeout(() => {
+				console.log(`${fileName} DELETED`);
+				readFiles()
+				return;
+			  }, 500);
+		
 		const sshObject = this.login(credentials)
-		console.log(`Deleting ${fileName}`)
+		console.log(`DELETING ${fileName}`)
 		sshObject
 		.exec(`rm -f printez/${fileName}`, {})
 		.start();
@@ -134,6 +149,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	
 	toUnix(credentials, pdfFileName, deleteFile){
 		console.log("ATTEMPTING TO TRANSFER FILE TO NUS UNIX SERVERS")
+
 		const conn = new Client();
 
 		conn.on('connect',
@@ -159,7 +175,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 						// make directory
 						sftp.mkdir("./printez", function(err) {
 							if (err) {
-							  console.log("Failed to create directory!", err);
+							  console.log("Failed to create directory!");
 							} else {
 							  console.log("Directory created on SFTP server");
 							}
@@ -173,7 +189,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 						writeStream.on('close',
 							function () {
 								console.log("- file transferred");
-								deleteFile()
+								deleteFile();
 								sftp.end();
 							}
 						);

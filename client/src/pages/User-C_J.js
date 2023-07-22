@@ -6,7 +6,10 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from '../style/style';
 import FileManager from '../components/fileManager/fileManager';
 
+import { useState } from 'react';
+
 function User({ socket, quotas, user }) {
+  const [selectedPrinter, setSelectedPrinter] = useState("")
   return (
     <ThemeProvider theme={theme}>
       <Box 

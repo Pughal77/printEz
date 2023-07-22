@@ -32,11 +32,12 @@ function FileManager({ socket }) {
                     }
                 )
                 fileNames.pop()
-                setRows(fileNames)
+                const filtFileNames = fileNames.filter((entry) => {return entry !== "base.txt"})
+                setRows(filtFileNames)
                 
             }
         })
-        console.log(rows)
+        // console.log(rows)
     }
     useEffect(readFiles, [socket])
 

@@ -51,6 +51,10 @@ io.on("connection", (socket) => {
                 user_credentials = credentials;
                 socket.emit("recievedCredentials", quotas);
                 waiting = false;
+                sshLogin.readFiles(credentials);
+                sshLogin.on("readFilesRes", (data) => {
+                    socket.emit("readFilesRes", data)
+                });
             }
         });
 
@@ -81,14 +85,20 @@ io.on("connection", (socket) => {
                 } else {
                     // set flag to true
                     fileUploaded = true;
-                    const deleteFile = () => fs.unlink(`print_files/${fileName}`, (err) => {
-                        if (err) {
-                            console.log(err);
-                        }
-                    })
+                    const deleteFile = () => {
+                        fs.unlink(`print_files/${fileName}`, (err) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                        sshLogin.readFiles(user_credentials);
+                    }
                     sshLogin.toUnix(user_credentials, fileName, deleteFile);
                     console.log("file written to print_files directory");
                     // callback({ message: "success" });
+                    sshLogin.on("readFilesRes", (data) => {
+                        socket.emit("readFilesRes", data);
+                    })
                 }
             });
 
@@ -121,27 +131,31 @@ io.on("connection", (socket) => {
 
     socket.on("delReq", (id) => {
         if (user_credentials) {
-            sshLogin.deleteJob(user_credentials, id)
+            sshLogin.deleteJob(user_credentials, id);
         } else {
             socket.emit("missingCredentials");
         }
     })
 
-    socket.on("readFilesReq", () => {
-        if (user_credentials) {
-            sshLogin.readFiles(user_credentials)
-            sshLogin.on("readFilesRes", (data) => {
-                socket.emit("readFilesRes", data)
-            })
-        } else {
-            socket.emit("missingCredentials");
-        }
-    })
+    // socket.on("readFilesReq", () => {
+    //     if (user_credentials) {
+    //         sshLogin.readFiles(user_credentials)
+    //         sshLogin.on("readFilesRes", (data) => {
+    //             socket.emit("readFilesRes", data)
+    //         })
+    //     } else {
+    //         socket.emit("missingCredentials");
+    //     }
+    // })
 
     socket.on("deleteFile", (fileName)=> {
         if (user_credentials) {
-            sshLogin.deleteFile(user_credentials, fileName)
-            socket.emit("readFilesReq")
+            let readFiles = () => {sshLogin.readFiles(user_credentials)};
+            sshLogin.deleteFile(user_credentials, fileName, readFiles);
+            
+            sshLogin.on("readFilesRes", (data) => {
+                socket.emit("readFilesRes", data);
+            })
         } else {
             socket.emit("missingCredentials");
         }
