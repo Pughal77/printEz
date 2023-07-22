@@ -141,6 +141,7 @@ io.on("connection", (socket) => {
     socket.on("deleteFile", (fileName)=> {
         if (user_credentials) {
             sshLogin.deleteFile(user_credentials, fileName)
+            socket.emit("readFilesReq")
         } else {
             socket.emit("missingCredentials");
         }
