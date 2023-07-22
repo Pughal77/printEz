@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import DrawerLeft from '../components/drawer'
 import { Box } from '@mui/material'
 import PrinterQueue from '../components/printerQueue'
@@ -7,6 +9,11 @@ import { theme } from '../style/style';
 import FileManager from '../components/fileManager/fileManager';
 
 function User({ socket, quotas, user }) {
+  const [printer, setPrinter] = useState("");
+
+  useEffect(() => {
+    console.log(`Selected Printer: ${printer}`)
+  }, [printer])
   return (
     <ThemeProvider theme={theme}>
       <Box 
@@ -24,10 +31,14 @@ function User({ socket, quotas, user }) {
           user={user}
         />
         <FileManager
-          socket = {socket}
+          socket={socket}
+          printer={printer}
+          setPrinter={setPrinter}
         />
         <PrinterQueue 
-          socket = {socket}
+          socket={socket}
+          printer={printer}
+          setPrinter={setPrinter}
         />
       </Box>
     </ThemeProvider>

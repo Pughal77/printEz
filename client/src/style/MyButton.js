@@ -13,7 +13,12 @@ export default function MyButton({ addStyle, text, handleClick }) {
         backgroundColor: '#ffffff',
         color: 'primary.main',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        '&:hover': {
+            backgroundColor: 'secondary.main',
+            color: '#000000',
+        },
+        height: '5vh'
     }
 
     return (

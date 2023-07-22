@@ -4,9 +4,10 @@ import { Box, Button } from '@mui/material'
 import { Alert, AlertTitle } from "@mui/material";
 import MyDataGrid from '../dataGrid'
 import UploadFile from './uploadFile'
+import PrinterSelect from '../printerSelect';
 
 
-function FileManager({ socket }) {
+function FileManager({ socket, printer, setPrinter }) {
     const [pdfWarning, setPDFWarning] = useState(false);
 
     const handlePrint = ({ fileName }) => {
@@ -49,7 +50,7 @@ function FileManager({ socket }) {
         },
         {
             field: 'printButton',
-            headerName: 'Print',
+            headerName: '',
             width: 150,
             renderCell: (params) => {
                 const fileName = params.row.file
@@ -58,7 +59,7 @@ function FileManager({ socket }) {
         },
         {
             field: 'deleteButton',
-            headerName: 'Delete',
+            headerName: '',
             width: 150,
             renderCell: (params) => {
                 const fileName = params.row.file
@@ -77,11 +78,23 @@ function FileManager({ socket }) {
         flexDirection: 'column',
         minWidth: '40%'
         }}
-    >
-        <UploadFile
-            socket={socket}
-            setPDFWarning={setPDFWarning}
-            readFiles = {readFiles}/>
+    >   
+        <Box 
+            sx={{
+            display:"flex",
+            backgroundColor: "primary.main",
+            flexDirection: 'row',
+            gap: '20px'
+            }}
+        >
+            <UploadFile
+                socket={socket}
+                setPDFWarning={setPDFWarning}
+                readFiles = {readFiles}/>
+            <PrinterSelect
+                printer={printer}
+                setPrinter={setPrinter}/>
+        </Box>
         <MyDataGrid 
             rows = {rows}
             columns = {columns}

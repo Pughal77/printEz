@@ -4,7 +4,7 @@ import read from '../utils/readJobs'
 import { Box, Button } from '@mui/material'
 import MyButton from '../style/MyButton'
 
-function PrinterQueue({ socket }) {
+function PrinterQueue({ socket, printer, setPrinter  }) {
     const columns = [
       {
         field: 'rank',
@@ -33,7 +33,7 @@ function PrinterQueue({ socket }) {
       },
       {
         field: 'Delete',
-        headerName: 'Delete Job',
+        headerName: '',
         width: 100,
         renderCell:(params) => {
           // use params.row to access properties of values in that cell
