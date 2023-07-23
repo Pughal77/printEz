@@ -52,12 +52,12 @@ function FileManager({ socket, printer, setPrinter }) {
         {
             field: 'file',
             headerName: 'File',
-            width: 400
+            width: 500
         },
         {
             field: 'printButton',
             headerName: '',
-            width: 150,
+            width: 125,
             renderCell: (params) => {
                 const fileName = params.row.file
                 return <Button onClick={() => handlePrint({fileName})}>Print</Button>
@@ -66,7 +66,7 @@ function FileManager({ socket, printer, setPrinter }) {
         {
             field: 'deleteButton',
             headerName: '',
-            width: 150,
+            width: 125,
             renderCell: (params) => {
                 const fileName = params.row.file
                 return <Button onClick={() => handleDelete(fileName)}>Delete</Button>
@@ -82,7 +82,7 @@ function FileManager({ socket, printer, setPrinter }) {
         display:"flex",
         backgroundColor: "primary.main",
         flexDirection: 'column',
-        minWidth: '35%'
+        minWidth: '40%'
         }}
     >   
         <Box 
