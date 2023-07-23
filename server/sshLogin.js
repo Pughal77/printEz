@@ -56,8 +56,8 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				// const editedText = text.substring(text.indexOf("Available") + 17);
 				// const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
 				// const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
-				const normalQuota = "";
-				const colorQuota = "";
+				const normalQuota = "85 pages (+od)";
+				const colorQuota = "0 pages";
 
 				console.log(`VALID CREDENTIALS\n`);
 				console.log(`NORMAL QUOTA: ${normalQuota}`);

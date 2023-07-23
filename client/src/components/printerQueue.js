@@ -76,7 +76,7 @@ function PrinterQueue({ socket, printer }) {
     <Box
       sx={{
         backgroundColor: "primary.main",
-        minWidth: "40%"
+        minWidth: "35%"
       }}
     >
       <MyButton

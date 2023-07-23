@@ -52,7 +52,7 @@ function FileManager({ socket, printer, setPrinter }) {
         {
             field: 'file',
             headerName: 'File',
-            width: 300
+            width: 400
         },
         {
             field: 'printButton',
@@ -82,7 +82,7 @@ function FileManager({ socket, printer, setPrinter }) {
         display:"flex",
         backgroundColor: "primary.main",
         flexDirection: 'column',
-        minWidth: '40%'
+        minWidth: '35%'
         }}
     >   
         <Box 
