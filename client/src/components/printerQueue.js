@@ -64,9 +64,9 @@ function PrinterQueue({ socket, printer }) {
   }, [socket, printer]);
 
   const handleClick = (e) => {
-    console.log("button pressed")
     if (printer != "") {
-      socket.emit("readJobQReq", printer)
+      // jobQ no longer working properly
+      // socket.emit("readJobQReq", printer)
     } else {
       setPrinterWarning(true);
     }
@@ -82,7 +82,7 @@ function PrinterQueue({ socket, printer }) {
       <MyButton
         addStyle={{mb: "10px"}}
         text="Refresh Queue"
-        onClick={handleClick}
+        handleClick={handleClick}
       />
       <MyDataGrid 
         rows = {rows}
