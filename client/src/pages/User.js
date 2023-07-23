@@ -12,7 +12,6 @@ function User({ socket, quotas, user }) {
   const [printer, setPrinter] = useState("");
 
   useEffect(() => {
-    console.log(`Selected Printer: ${printer}`)
   }, [printer])
   return (
     <ThemeProvider theme={theme}>
@@ -38,7 +37,6 @@ function User({ socket, quotas, user }) {
         <PrinterQueue 
           socket={socket}
           printer={printer}
-          setPrinter={setPrinter}
         />
       </Box>
     </ThemeProvider>

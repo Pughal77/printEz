@@ -65,21 +65,31 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 
 				clearTimeout(timeoutObj);	
 				this.emit("successfulLogin", {normalQuota, colorQuota});
+				return;
 			}
 		}).start();
 	}
 
-	printFile(credentials, fileName){
-		const sshObject = this.login(credentials)
+	printFile(credentials, fileName, printer){
+		console.log(`PRINTING ON ${printer}`);
+		const sshObject = this.login(credentials);
+		const timeoutObj = setTimeout(() => {
+			console.log(`jobQ not responding`);
+			return;
+		  }, 1000);
+
 		sshObject
-		.exec(`lpr -P psc008 printez/${fileName}`, {})
-		.exec(`lpq -P psc008`, {
-			out: (stdout) => {
-				console.log(`print Q: ${stdout}`);
-				this.emit("readJobQRes", stdout)
-			}
-		})
-		.start();
+			.exec(`lpr -P ${printer} printez/${fileName}`, {})
+			.exec(`lpq -P ${printer}`, {
+				out: (stdout) => {
+					console.log(`print Q: ${stdout}`);
+					// lpq command currently does not work
+					// this.emit("readJobQRes", stdout)
+					console.log(`readJobQRes emitted`);
+					return;
+				}
+			})
+			.start();
 		// sshObject
 		// .exec('ls', {
 		// 	out: (stdout) => {
@@ -89,15 +99,24 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		// .start();
 	}
 
-	jobQ(credentials){
+	jobQ(credentials, printer){
 		const sshObject = this.login(credentials)
+		console.log(`ATTEMPTING TO READ JOB Q OF ${printer}`)
+		const timeoutObj = setTimeout(() => {
+			console.log(`jobQ not responding`);
+			return;
+		  }, 1000);
 		// for testing
 		// const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
 		sshObject
-		.exec(`lpq -P psc008`, {
+		.exec(`lpq -P ${printer}`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
-				this.emit("readJobQRes", stdout)
+				// lpq command currently does not work
+				// this.emit("readJobQRes", stdout);
+				console.log(`readJobQRes emitted`);
+				return;
+				
 				// for testing
 				// this.emit("readJobQRes", testData)
 			}
@@ -105,11 +124,11 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		.start();
 	}
 
-	deleteJob(credentials, id) {
+	deleteJob(credentials, id, printer) {
 		const sshObject = this.login(credentials)
 		console.log(`Deleting job ${id}`)
 		sshObject
-		.exec(`lprm -P psc008 ${id}`, {})
+		.exec(`lprm -P ${printer} ${id}`, {})
 		.start();
 	}
 
@@ -125,9 +144,10 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		sshObject
 		.exec(`ls printez`, {
 			out: (stdout) => {
-				console.log(`${stdout}`);
+				console.log(`files in printez dir: ${stdout}`);
 				this.emit("readFilesRes", stdout)
 				clearTimeout(timeoutObj);
+				return;
 			}
 		})
 		.start();

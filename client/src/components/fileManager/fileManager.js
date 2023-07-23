@@ -9,9 +9,15 @@ import PrinterSelect from '../printerSelect';
 
 function FileManager({ socket, printer, setPrinter }) {
     const [pdfWarning, setPDFWarning] = useState(false);
+    const [printerWarning, setPrinterWarning] = useState(false);
 
     const handlePrint = ({ fileName }) => {
-        socket.emit("printAttempt", fileName)
+        if (printer != "") {
+            socket.emit("printAttempt", {fileName, printer})
+        } else {
+            setPrinterWarning(true);
+        }
+        
     }
 
     const handleDelete = (fileName) => {
@@ -104,14 +110,24 @@ function FileManager({ socket, printer, setPrinter }) {
         />
         {
         pdfWarning && 
-                <Alert 
-                    severity="error"
-                    onClose={() => {setPDFWarning(false)}}
-                >
-                    <AlertTitle>ERROR</AlertTitle>
-                    <strong>please upload a PDF file</strong>
-                </Alert>
-            }
+            <Alert 
+                severity="error"
+                onClose={() => {setPDFWarning(false)}}
+            >
+                <AlertTitle>ERROR</AlertTitle>
+                <strong>please upload a PDF file</strong>
+            </Alert>
+        }
+        {
+        printerWarning && 
+            <Alert 
+                severity="error"
+                onClose={() => {setPrinterWarning(false)}}
+            >
+                <AlertTitle>ERROR</AlertTitle>
+                <strong>please choose a printer</strong>
+            </Alert>
+        }
     </Box>
   )
 }
