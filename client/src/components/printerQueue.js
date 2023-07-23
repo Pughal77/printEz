@@ -42,7 +42,8 @@ function PrinterQueue({ socket, printer, setPrinterWarning }) {
         const handleDelete = (id) => {
           if (printer != "") {
             socket.emit("delReq", {id, printer})
-            socket.emit("readJobQReq", printer)
+            // socket.emit("readJobQReq", printer)
+            setRows([]);
           }
         }
         return <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
