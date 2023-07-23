@@ -6,7 +6,7 @@ import read from '../utils/readJobs'
 import { Box, Button } from '@mui/material'
 import MyButton from '../style/MyButton'
 
-function PrinterQueue({ socket, printer }) {
+function PrinterQueue({ socket, printer, setPrinterWarning }) {
   const columns = [
     {
       field: 'rank',
@@ -26,7 +26,7 @@ function PrinterQueue({ socket, printer }) {
     {
       field: 'file',
       headerName: 'File',
-      width: 150
+      width: 250
     },
     {
       field: 'size',
@@ -51,22 +51,21 @@ function PrinterQueue({ socket, printer }) {
   ]
 
   const [rows,setRows] = useState([]);
-  const [printerWarning, setPrinterWarning] = useState(false);
 
   useEffect(() => {
     if (printer != "") {
       // jobQ no longer working properly
-      // socket.emit("readJobQReq", printer)
-      // socket.on("readJobQRes", (data) => {
-      //     read(data, setRows)
-      // })
+      socket.emit("readJobQReq", printer)
+      socket.on("readJobQRes", (data) => {
+          read(data, setRows)
+      })
     }
   }, [socket, printer]);
 
   const handleClick = (e) => {
     if (printer != "") {
       // jobQ no longer working properly
-      // socket.emit("readJobQReq", printer)
+      socket.emit("readJobQReq", printer)
     } else {
       setPrinterWarning(true);
     }
@@ -91,15 +90,6 @@ function PrinterQueue({ socket, printer }) {
           return row.id
         }}
       />
-      {printerWarning && 
-        <Alert 
-          severity="error"
-          onClose={() => {setPrinterWarning(false)}}
-        >
-          <AlertTitle>ERROR</AlertTitle>
-          <strong>please choose a printer</strong>
-        </Alert>
-      }
     </Box>
   )
 }

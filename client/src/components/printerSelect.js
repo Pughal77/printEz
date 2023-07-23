@@ -7,11 +7,14 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 import { theme } from '../style/style'
 
-export default function PrinterSelect({ printer, setPrinter }) {
+export default function PrinterSelect({ printer, setPrinter, setPWarning }) {
     const [printerWarning, setPrinterWarning] = useState(true);
 
     useEffect(() => {
         setPrinterWarning(printer == "");
+        if (printer != "") {
+            setPWarning(false);
+        }
     }, [printer]);
     return (
         <ThemeProvider theme={theme}> 

@@ -10,7 +10,7 @@ import FileManager from '../components/fileManager/fileManager';
 
 function User({ socket, quotas, user }) {
   const [printer, setPrinter] = useState("");
-
+  const [printerWarning, setPrinterWarning] = useState(false);
   useEffect(() => {
   }, [printer])
   return (
@@ -33,10 +33,13 @@ function User({ socket, quotas, user }) {
           socket={socket}
           printer={printer}
           setPrinter={setPrinter}
+          printerWarning={printerWarning}
+          setPrinterWarning={setPrinterWarning}
         />
         <PrinterQueue 
           socket={socket}
           printer={printer}
+          setPrinterWarning={setPrinterWarning}
         />
       </Box>
     </ThemeProvider>

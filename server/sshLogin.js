@@ -46,8 +46,9 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		)
 		
 		const sshObject = this.login(credentials)
-		// prints hostname
+		// base.txt is there to ensure that ls returns an output 
 		sshObject
+		.exec("> base.txt", {})
 		.exec(/*"pusage"*/"ls", {
 			out: (stdout) => {
 
@@ -106,8 +107,12 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			console.log(`jobQ not responding`);
 			return;
 		  }, 1000);
+
 		// for testing
-		// const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
+		const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
+		this.emit("readJobQRes", testData);
+		return;
+
 		sshObject
 		.exec(`lpq -P ${printer}`, {
 			out: (stdout) => {
@@ -116,9 +121,6 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				// this.emit("readJobQRes", stdout);
 				console.log(`readJobQRes emitted`);
 				return;
-				
-				// for testing
-				// this.emit("readJobQRes", testData)
 			}
 		})
 		.start();

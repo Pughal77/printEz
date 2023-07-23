@@ -7,9 +7,8 @@ import UploadFile from './uploadFile'
 import PrinterSelect from '../printerSelect';
 
 
-function FileManager({ socket, printer, setPrinter }) {
+function FileManager({ socket, printer, setPrinter, printerWarning, setPrinterWarning }) {
     const [pdfWarning, setPDFWarning] = useState(false);
-    const [printerWarning, setPrinterWarning] = useState(false);
 
     const handlePrint = ({ fileName }) => {
         if (printer != "") {
@@ -99,7 +98,8 @@ function FileManager({ socket, printer, setPrinter }) {
                 readFiles = {readFiles}/>
             <PrinterSelect
                 printer={printer}
-                setPrinter={setPrinter}/>
+                setPrinter={setPrinter}
+                setPWarning={setPrinterWarning}/>
         </Box>
         <MyDataGrid 
             rows = {rows}
