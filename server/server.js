@@ -67,6 +67,15 @@ io.on("connection", (socket) => {
             }
         });
 
+        // NUS SoC unix server commands not working
+        sshLogin.on("unixDown", () => {
+            if (waiting) {
+                console.log("emitting 'unixDown'")
+                socket.emit("unixDown");
+                waiting = false;
+            }
+        });
+
         // attempt to log in with current credentials
         console.log(`attempting to log-in for ${credentials.username}`);
         sshLogin.loginAttempt(credentials);

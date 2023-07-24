@@ -8,6 +8,7 @@ function Login({ socket, quotas, setQuotas, setUser }) {
     const [password, setPassword] = useState('')
     const [usertype, setUsertype] = useState('')
     const [invalid, setInvalid] = useState(false);
+    const [unixWarning, setUnixWarning] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -27,6 +28,10 @@ function Login({ socket, quotas, setQuotas, setUser }) {
         socket.on("invalidCredentials", () => {
             setInvalid(true);
         });
+
+        socket.on("unixDown", () => {
+            setUnixWarning(true);
+        });
     }, [socket])
 
   return (
@@ -40,6 +45,8 @@ function Login({ socket, quotas, setQuotas, setUser }) {
             handleSubmit = {handleSubmit}
             invalid = {invalid}
             setInvalid = {setInvalid}
+            unixWarning = {unixWarning}
+            setUnixWarning = {setUnixWarning}
         />
     </div>
   )

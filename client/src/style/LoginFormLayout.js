@@ -32,7 +32,9 @@ export default function SignIn({
   setUsertype, 
   handleSubmit,
   invalid,
-  setInvalid}) {
+  setInvalid,
+  unixWarning,
+  setUnixWarning}) {
 
     const [isShown, setIsSHown] = useState(false);
     const togglePassword = () => {
@@ -113,15 +115,25 @@ export default function SignIn({
               </Button>
             </Box>
             {invalid && 
-                        <Alert 
-                            severity="error"
-                            onClose={() => {setInvalid(false)}}
-                        >
-                            <AlertTitle>ERROR</AlertTitle>
-                            invalid username / password / usertype <br/>
-                            <strong>please try again</strong>
-                        </Alert>
-                    }
+              <Alert 
+                severity="error"
+                onClose={() => {setInvalid(false)}}
+              >
+                <AlertTitle>ERROR</AlertTitle>
+                invalid username / password / usertype <br/>
+                <strong>please try again</strong>
+              </Alert>
+            }
+            {unixWarning &&
+              <Alert 
+              severity="error"
+              onClose={() => {setUnixWarning(false)}}
+            >
+              <AlertTitle>ERROR</AlertTitle>
+              SOC UNIX SERVER COMMANDS NOT FUNCTIONING <br/>
+              <strong>admins have been notified of the issue</strong>
+            </Alert>
+            }
           </Box>
         </Container>
       </ThemeProvider>

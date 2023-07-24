@@ -16,7 +16,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	createTimeout(text, time, toDo){
 		return setTimeout(() => {
 			console.log(text);
-			this.emit(toDo)
+			this.emit(toDo);
 			return;
 		  }, time);
 	}
@@ -39,16 +39,28 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 
 	loginAttempt(credentials){
 		// set timeout for login (unsuccessful if unable to log in within the )
-		const timeoutObj = this.createTimeout(
-			"INVALID CREDENTIALS \n",
-			2500,
-			"unsuccessfulLogin"
-		)
+		let credentialsCorrect = false;
+		const timeoutObj = setTimeout(() => {
+			if (!credentialsCorrect) {
+				console.log("INVALID CREDENTIALS \n");
+				this.emit("unsuccessfulLogin");
+				return;
+			} else {
+				console.log("ERROR - SOC UNIX COMMANDS NOT FUNCTIONING");
+				this.emit("unixDown");
+				return;
+			}
+
+		}, 2500)
 		
 		const sshObject = this.login(credentials)
-		// base.txt is there to ensure that ls returns an output 
+		
 		sshObject
-		.exec("> base.txt", {})
+		.exec("hostname", {
+			out: (stdout) => {
+				credentialsCorrect = true;
+			}
+		})
 		.exec(/*"pusage"*/"ls", {
 			out: (stdout) => {
 
@@ -57,8 +69,8 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				// const editedText = text.substring(text.indexOf("Available") + 17);
 				// const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
 				// const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
-				const normalQuota = "85 pages (+od)";
-				const colorQuota = "0 pages";
+				const normalQuota = "85 pages (+od)"
+				const colorQuota = "0 pages"
 
 				console.log(`VALID CREDENTIALS\n`);
 				console.log(`NORMAL QUOTA: ${normalQuota}`);
