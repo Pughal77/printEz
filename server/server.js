@@ -31,9 +31,6 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     // temp variable to store user_credentials
     let user_credentials = null;
-    // temp flag to determine if file has been uploaded
-    // needed to determine if there is a file that needs to be deleted
-    let fileUploaded = false;
 
     console.log(`Client Connected: ${socket.id}`);
     socket.emit("newConnection");
@@ -92,8 +89,7 @@ io.on("connection", (socket) => {
                     console.log(err);
                     callback({ message: "failure" });
                 } else {
-                    // set flag to true
-                    fileUploaded = true;
+                    
                     const deleteFile = () => {
                         fs.unlink(`print_files/${fileName}`, (err) => {
                             if (err) {
