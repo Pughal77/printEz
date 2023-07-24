@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 
-import { Alert, AlertTitle } from "@mui/material";
 import MyDataGrid from './dataGrid'
 import read from '../utils/readJobs'
 import { Box, Button } from '@mui/material'
@@ -41,9 +40,8 @@ function PrinterQueue({ socket, printer, setPrinterWarning }) {
         // use params.row to access properties of values in that cell
         const handleDelete = (id) => {
           if (printer != "") {
-            socket.emit("delReq", {id, printer})
-            // socket.emit("readJobQReq", printer)
-            setRows([]);
+            socket.emit("delReq", {id, printer});
+            socket.emit("readJobQReq", printer);
           }
         }
         return <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
@@ -55,18 +53,16 @@ function PrinterQueue({ socket, printer, setPrinterWarning }) {
 
   useEffect(() => {
     if (printer != "") {
-      // jobQ no longer working properly
-      socket.emit("readJobQReq", printer)
+      socket.emit("readJobQReq", printer);
       socket.on("readJobQRes", (data) => {
           read(data, setRows)
-      })
+      });
     }
   }, [socket, printer]);
 
   const handleClick = (e) => {
     if (printer != "") {
-      // jobQ no longer working properly
-      socket.emit("readJobQReq", printer)
+      socket.emit("readJobQReq", printer);
     } else {
       setPrinterWarning(true);
     }

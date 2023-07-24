@@ -61,7 +61,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				credentialsCorrect = true;
 			}
 		})
-		.exec(/*"pusage"*/"ls", {
+		.exec("pusage", {
 			out: (stdout) => {
 
 				// obtain the relevant quotas from stdout
@@ -69,8 +69,10 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				// const editedText = text.substring(text.indexOf("Available") + 17);
 				// const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
 				// const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
-				const normalQuota = "85 pages (+od)"
-				const colorQuota = "0 pages"
+				
+				// test data
+				// const normalQuota = "85 pages (+od)"
+				// const colorQuota = "0 pages"
 
 				console.log(`VALID CREDENTIALS\n`);
 				console.log(`NORMAL QUOTA: ${normalQuota}`);
@@ -97,19 +99,13 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				out: (stdout) => {
 					console.log(`print Q: ${stdout}`);
 					// lpq command currently does not work
-					// this.emit("readJobQRes", stdout)
+					this.emit("readJobQRes", stdout)
 					console.log(`readJobQRes emitted`);
+					clearTimeout(timeoutObj);
 					return;
 				}
 			})
 			.start();
-		// sshObject
-		// .exec('ls', {
-		// 	out: (stdout) => {
-		// 		this.emit("readJobQRes", "ganyi-w's job has been processed: Dan Jurafsky and Ja.1 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive pughal     158  printez/pughal.pdf                    117892 bytes")
-		// 	}
-		// })
-		// .start();
 	}
 
 	jobQ(credentials, printer){
@@ -121,9 +117,9 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		  }, 1000);
 
 		// for testing
-		const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/jamesllo.pdf                  52061 bytes"
-		this.emit("readJobQRes", testData);
-		return;
+		// const testData = "- file transferredprint Q: i0000872's job has been processed: draft_Proof_hi.pdf.28 pages were printed.---------------------------------------------------------------------------Rank   Owner      Job  Files                                 Total Sizeactive jamesllo   157  printez/SampleResume.pdf                  78021 bytes"
+		// this.emit("readJobQRes", testData);
+		// return;
 
 		sshObject
 		.exec(`lpq -P ${printer}`, {
@@ -132,6 +128,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				// lpq command currently does not work
 				// this.emit("readJobQRes", stdout);
 				console.log(`readJobQRes emitted`);
+				clearTimeout(timeoutObj);
 				return;
 			}
 		})
