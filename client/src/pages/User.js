@@ -11,6 +11,7 @@ import FileManager from '../components/fileManager/fileManager';
 function User({ socket, quotas, user }) {
   const [printer, setPrinter] = useState("");
   const [printerWarning, setPrinterWarning] = useState(false);
+  
   useEffect(() => {
   }, [printer])
   return (
