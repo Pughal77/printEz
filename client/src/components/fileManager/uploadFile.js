@@ -38,7 +38,7 @@ export default function UploadFile({socket, setPDFWarning}){
             socket.emit("pdfTransfer", { selectedFile, fileName })
             setIsPDF(false);
         }
-    }, [selectedFile])
+    }, [selectedFile, isPDF, socket])
     
 
     return (

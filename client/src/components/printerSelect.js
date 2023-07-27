@@ -11,11 +11,11 @@ export default function PrinterSelect({ printer, setPrinter, setPWarning }) {
     const [printerWarning, setPrinterWarning] = useState(true);
 
     useEffect(() => {
-        setPrinterWarning(printer == "");
-        if (printer != "") {
+        setPrinterWarning(printer === "");
+        if (printer !== "") {
             setPWarning(false);
         }
-    }, [printer]);
+    }, [printer, setPWarning]);
     return (
         <ThemeProvider theme={theme}> 
             <Select

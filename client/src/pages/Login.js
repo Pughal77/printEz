@@ -32,7 +32,7 @@ function Login({ socket, quotas, setQuotas, setUser }) {
         socket.on("unixDown", () => {
             setUnixWarning(true);
         });
-    }, [socket])
+    }, [socket, navigate, setQuotas])
 
   return (
     <div>

@@ -1,7 +1,5 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@emotion/react';
-import { CssBaseline } from '@mui/material';
 
 import { theme } from './style';
 
