@@ -40,7 +40,8 @@ io.on("connection", (socket) => {
         let waiting = true;
 
         console.log("\n");
-        console.log(credentials);
+        // console.log(credentials);
+
         // credentials verified
         sshLogin.on("successfulLogin", (quotas) => {
             if (waiting) {
@@ -76,6 +77,26 @@ io.on("connection", (socket) => {
         // attempt to log in with current credentials
         console.log(`attempting to log-in for ${credentials.username}`);
         sshLogin.loginAttempt(credentials);
+    });
+
+    socket.on("quotaReq", () => {
+        waiting = true;
+        sshLogin.on("quotaRes", (quotas) => {
+            if (waiting) {
+                socket.emit("quotaRes", quotas);
+                waiting = false;
+            }
+        });
+
+        sshLogin.on("unixDown", () => {
+            if (waiting) {
+                socket.emit("invalidCredentials");
+                waiting = false;
+            }
+        });
+
+        console.log(`checking quota for ${user_credentials.username}`);
+        sshLogin.checkQuota(user_credentials);
     });
 
     // receiving pdf file

@@ -51,7 +51,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				return;
 			}
 
-		}, 2500)
+		}, 2500);
 		
 		const sshObject = this.login(credentials)
 		
@@ -65,10 +65,10 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			out: (stdout) => {
 
 				// obtain the relevant quotas from stdout
-				// const text = stdout.toString();
-				// const editedText = text.substring(text.indexOf("Available") + 17);
-				// const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
-				// const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
+				const text = stdout.toString();
+				const editedText = text.substring(text.indexOf("Available") + 17);
+				const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
+				const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
 				
 				// test data
 				// const normalQuota = "85 pages (+od)"
@@ -83,6 +83,40 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				return;
 			}
 		}).start();
+	}
+
+	checkQuota(credentials) {
+		const timeoutObj = setTimeout(() => {
+			console.log("ERROR - SOC UNIX COMMANDS NOT FUNCTIONING");
+			this.emit("unixDown");
+			return;
+		}, 2500);
+
+		const sshObject = this.login(credentials);
+
+		sshObject
+		.exec("pusage", {
+			out: (stdout) => {
+
+				// obtain the relevant quotas from stdout
+				const text = stdout.toString();
+				const editedText = text.substring(text.indexOf("Available") + 17);
+				const normalQuota = editedText.substring(0, editedText.indexOf("Quota") - 2);
+				const colorQuota = editedText.substring(editedText.indexOf("Available") + 17, editedText.indexOf("If") - 2);
+				
+				// test data
+				// const normalQuota = "85 pages (+od)"
+				// const colorQuota = "0 pages"
+
+				console.log(`NORMAL QUOTA: ${normalQuota}`);
+				console.log(`COLOR QUOTA: ${colorQuota}`);
+
+				clearTimeout(timeoutObj);	
+				this.emit("quotaRes", {normalQuota, colorQuota});
+				return;
+			}
+		}).start();
+
 	}
 
 	printFile(credentials, fileName, printer){
@@ -125,8 +159,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 		.exec(`lpq -P ${printer}`, {
 			out: (stdout) => {
 				console.log(`print Q: ${stdout}`);
-				// lpq command currently does not work
-				// this.emit("readJobQRes", stdout);
+				this.emit("readJobQRes", stdout);
 				console.log(`readJobQRes emitted`);
 				clearTimeout(timeoutObj);
 				return;

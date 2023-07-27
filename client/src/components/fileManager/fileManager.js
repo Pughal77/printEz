@@ -11,8 +11,8 @@ function FileManager({ socket, printer, setPrinter, printerWarning, setPrinterWa
     const [pdfWarning, setPDFWarning] = useState(false);
 
     const handlePrint = ({ fileName }) => {
-        if (printer != "") {
-            socket.emit("printAttempt", {fileName, printer})
+        if (printer !== "") {
+            socket.emit("printAttempt", {fileName, printer});
         } else {
             setPrinterWarning(true);
         }

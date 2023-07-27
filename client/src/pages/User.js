@@ -8,12 +8,17 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from '../style/style';
 import FileManager from '../components/fileManager/fileManager';
 
-function User({ socket, quotas, user }) {
+function User({ socket, setQuotas, quotas, user }) {
   const [printer, setPrinter] = useState("");
   const [printerWarning, setPrinterWarning] = useState(false);
   
+
   useEffect(() => {
-  }, [printer])
+    socket.on("quotaRes", (data) => {
+      setQuotas(data);
+    });
+  }, [socket, setQuotas]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box 

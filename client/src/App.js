@@ -31,6 +31,7 @@ function App() {
         />}/>
         <Route path="/user" element={<User
           socket = {socket}
+          setQuotas={setQuotas}
           quotas={quotas}
           user={user}
         />} />

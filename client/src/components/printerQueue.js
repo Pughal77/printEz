@@ -39,9 +39,11 @@ function PrinterQueue({ socket, printer, setPrinterWarning }) {
       renderCell:(params) => {
         // use params.row to access properties of values in that cell
         const handleDelete = (id) => {
-          if (printer != "") {
+          if (printer !== "") {
             socket.emit("delReq", {id, printer});
-            socket.emit("readJobQReq", printer);
+            setTimeout(() => {
+              socket.emit("readJobQReq", printer);;
+              }, 1000);
           }
         }
         return <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
@@ -52,17 +54,19 @@ function PrinterQueue({ socket, printer, setPrinterWarning }) {
   const [rows,setRows] = useState([]);
 
   useEffect(() => {
-    if (printer != "") {
+    if (printer !== "") {
       socket.emit("readJobQReq", printer);
       socket.on("readJobQRes", (data) => {
           read(data, setRows)
       });
+      socket.emit("quotaReq");
     }
   }, [socket, printer]);
 
   const handleClick = (e) => {
-    if (printer != "") {
+    if (printer !== "") {
       socket.emit("readJobQReq", printer);
+      socket.emit("quotaReq");
     } else {
       setPrinterWarning(true);
     }
