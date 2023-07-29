@@ -61,4 +61,4 @@ Our user page:
 ## Demo
 
 Watch our video demo here!:
-[https://youtu.be/uFCc56Jf9ro](https://www.youtube.com/watch?v=10K80ZrkzZM)https://www.youtube.com/watch?v=10K80ZrkzZM
+[https://www.youtube.com/watch?v=10K80ZrkzZM](https://www.youtube.com/watch?v=10K80ZrkzZM)
