@@ -56,7 +56,7 @@ Our welcome page:
 Our login page:
 ![Login](client/src/assets/login.png)
 Our user page:
-![UploadPage](client/src/assets/uploadPage.png)
+![UploadPage](client/src/assets/user.png)
 
 ## Demo
 
