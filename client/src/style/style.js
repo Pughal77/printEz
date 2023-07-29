@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { CssBaseline, Box, Button, styled, Card } from '@mui/material';
+import { CssBaseline, Box, Button } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import logo from '../assets/logo.svg';
 import Typewriter from "typewriter-effect";
@@ -33,8 +33,6 @@ const theme = createTheme({
         tonalOffset: 0.2,
     },
 });
-
-const myCard = styled(Card) ({ minWidth: 240, backgroundColor: "#aaacaf", borderRadius:"20px"  })
 // top banner
 function TopBannerStyle() {
     return (
@@ -109,6 +107,5 @@ function WelcomeStyle(handleClick) {
 }
 
 export { theme,
-    myCard,
     TopBannerStyle,
     WelcomeStyle }

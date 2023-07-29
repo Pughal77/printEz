@@ -10,7 +10,7 @@ import { theme } from '../style/style';
 // coloumns need to be passed as an array of objects with certain properties u can see what they are
 // in this link https://mui.com/x/react-data-grid/
 // for rows they should be objects with the same name of properties as the fields sdefined in coloumns
-// impt can use rendercell(when defining coloumns) to render jsx expressions that is show in every cell of ur table
+// impt can use rendercell(when defining coloumns) to render jsx expressions that is shown in every cell of your table
 
 export default function MyDataGrid({ rows, columns, getRowId }) {
   return (
