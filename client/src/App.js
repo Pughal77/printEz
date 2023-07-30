@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 // initialize socket.io
 import { io } from "socket.io-client";
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("https://printez.onrender.com");
 
 function App() {
   const [quotas, setQuotas] = useState({normalQuota: "", colorQuota: ""});
