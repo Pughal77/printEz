@@ -51,7 +51,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				return;
 			}
 
-		}, 2500);
+		}, 5000);
 		
 		const sshObject = this.login(credentials)
 		
