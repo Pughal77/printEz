@@ -23,7 +23,7 @@ const io = new Server(server, {
     maxHttpBufferSize: 1e8,
     cors: {
         // current frontend deployment link
-        origin: "https://orbital23printez.netlify.app",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST"],
     },
 });
@@ -193,6 +193,6 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(80, () => {
-    console.log("SERVER IS RUNNING (PORT 80 - DEFAULT PORT)");
+server.listen(3001, () => {
+    console.log("SERVER IS RUNNING (PORT 3001 - DEFAULT PORT)");
 });
