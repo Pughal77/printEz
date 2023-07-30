@@ -22,7 +22,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     maxHttpBufferSize: 1e8,
     cors: {
-        // origin: "http://localhost:3000",
+        // current frontend deployment link
         origin: "https://orbital23printez.netlify.app/",
         methods: ["GET", "POST"],
     },
