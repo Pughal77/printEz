@@ -131,7 +131,7 @@ export default function SignIn({
             >
               <AlertTitle>ERROR</AlertTitle>
               SOC UNIX SERVER COMMANDS NOT FUNCTIONING <br/>
-              <strong>admins have been notified of the issue</strong>
+              <strong>the admins are working on it</strong>
             </Alert>
             }
           </Box>
