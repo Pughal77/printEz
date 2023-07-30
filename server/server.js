@@ -22,7 +22,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
     maxHttpBufferSize: 1e8,
     cors: {
-        origin: "http://localhost:3000",
+        // origin: "http://localhost:3000",
+        origin: "https://printezorbital23.netlify.app",
         methods: ["GET", "POST"],
     },
 });
