@@ -76,7 +76,6 @@ io.on("connection", (socket) => {
         });
 
         // attempt to log in with current credentials
-        console.log(`attempting to log-in for ${credentials.username}`);
         sshLogin.loginAttempt(credentials);
     });
 

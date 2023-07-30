@@ -38,7 +38,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 	}
 
 	loginAttempt(credentials){
-		// set timeout for login (unsuccessful if unable to log in within the )
+		// set timeout for login (unsuccessful if unable to log in within the timeframe)
 		let credentialsCorrect = false;
 		const timeoutObj = setTimeout(() => {
 			if (!credentialsCorrect) {
@@ -52,6 +52,8 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 			}
 
 		}, 3000);
+		
+		console.log(`attempting to log-in for ${credentials.username}`);
 		
 		const sshObject = this.login(credentials)
 		
