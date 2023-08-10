@@ -15,6 +15,7 @@ function User({ socket, setQuotas, quotas, user }) {
 
   useEffect(() => {
     socket.on("quotaRes", (data) => {
+      console.log(data);
       setQuotas(data);
     });
   }, [socket, setQuotas]);

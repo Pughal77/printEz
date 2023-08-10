@@ -108,8 +108,7 @@ class SSHLogin extends EventEmitter{// function to ssh into NUS unix servers
 				// const normalQuota = "85 pages (+od)"
 				// const colorQuota = "0 pages"
 
-				console.log(`NORMAL QUOTA: ${normalQuota}`);
-				console.log(`COLOR QUOTA: ${colorQuota}`);
+				
 
 				clearTimeout(timeoutObj);	
 				this.emit("quotaRes", {normalQuota, colorQuota});

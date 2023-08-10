@@ -84,6 +84,8 @@ io.on("connection", (socket) => {
         waiting = true;
         sshLogin.on("quotaRes", (quotas) => {
             if (waiting) {
+                console.log(`NORMAL QUOTA: ${quotas.normalQuota}`);
+				console.log(`COLOR QUOTA: ${quotas.colorQuota}`);
                 socket.emit("quotaRes", quotas);
                 waiting = false;
             }
